@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\framework\New folder\Framework.Core\Framework.Core.csproj" />
+    <ProjectReference Include="..\..\2-Infrastructures\3rdParties\App.Infra.3rdParties.Scheduler.hangfire\App.Infra.3rdParties.Scheduler.hangfire.csproj" />
+  </ItemGroup>
+
+</Project>
