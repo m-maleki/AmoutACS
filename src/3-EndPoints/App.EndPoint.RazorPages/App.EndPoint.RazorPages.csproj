@@ -7,8 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\framework\New folder\Framework.Core\Framework.Core.csproj" />
+    <ProjectReference Include="..\..\1-Domain\Services\App.Domain.AppServices\App.Domain.AppServices.csproj" />
+    <ProjectReference Include="..\..\1-Domain\Services\App.Domain.Services\App.Domain.Services.csproj" />
     <ProjectReference Include="..\..\2-Infrastructures\3rdParties\App.Infra.3rdParties.Scheduler.hangfire\App.Infra.3rdParties.Scheduler.hangfire.csproj" />
+    <ProjectReference Include="..\..\2-Infrastructures\DataAccess\App.Infra.Data.QueryServices.SqlServer.Dapper\App.Infra.Data.QueryServices.SqlServer.Dapper.csproj" />
+    <ProjectReference Include="..\..\2-Infrastructures\DataAccess\App.Infra.Data.Repos.Ef\App.Infra.Data.Repos.Ef.csproj" />
+    <ProjectReference Include="..\..\2-Infrastructures\Db\App.Infra.Data.Db.SqlServer.Ef\App.Infra.Data.Db.SqlServer.Ef.csproj" />
   </ItemGroup>
 
 </Project>

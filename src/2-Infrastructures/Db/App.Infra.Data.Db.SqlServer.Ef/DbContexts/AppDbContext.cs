@@ -1,9 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using App.Infra.Data.Db.SqlServer.Ef.Entities.AccessControl;
+using Microsoft.EntityFrameworkCore;
 
 namespace App.Infra.Data.Db.SqlServer.Ef.DbContexts;
+
 public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
+    }
+
+    public DbSet<EventDbEntity> Events { get; set; }
+    public DbSet<EventsProcessedDbEntity> EventsProcessed { get; set; }
+
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.ApplyConfiguration(new EventDbEntityConfig());
+        modelBuilder.ApplyConfiguration(new EventsProcessedDbEntityConfig());
     }
 }
