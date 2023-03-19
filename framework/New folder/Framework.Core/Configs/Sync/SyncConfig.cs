@@ -3,4 +3,6 @@
 public class SyncConfig
 {
     public string SyncEventsCron { get; set; }
+    public string SyncUsersCron { get; set; }
+
 }

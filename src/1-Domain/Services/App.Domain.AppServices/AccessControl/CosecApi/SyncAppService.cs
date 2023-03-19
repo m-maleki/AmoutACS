@@ -20,6 +20,8 @@ public class SyncAppService : ISyncAppService
     private readonly IHttpClientFactory _clientFactory;
     private readonly IEventsProcessedService _eventsProcessedService;
     private readonly IEventsQueryService _eventsQueryService;
+    private readonly IUserService _userService;
+    private readonly IUserQueryServices _userQueryServices;
     #endregion
 
     #region Ctor
@@ -27,12 +29,16 @@ public class SyncAppService : ISyncAppService
     public SyncAppService(ISchedulerProvider schedulerProvider,
         IHttpClientFactory clientFactory,
         IEventsProcessedService eventsProcessedService,
-        IEventsQueryService eventsQueryService)
+        IEventsQueryService eventsQueryService,
+        IUserService userService,
+        IUserQueryServices userQueryServices)
     {
         _schedulerProvider = schedulerProvider;
         _clientFactory = clientFactory;
         _eventsProcessedService = eventsProcessedService;
         _eventsQueryService = eventsQueryService;
+        _userService = userService;
+        _userQueryServices = userQueryServices;
     }
 
     #endregion
@@ -42,10 +48,12 @@ public class SyncAppService : ISyncAppService
     public void AddRecurringJobs(SiteSettings siteSettings)
     {
         if (CanAddJobUtility.CanAddJob(1, siteSettings.HangfireJobs))
-            _schedulerProvider.AddRecurringJob<ISyncAppService>(CanAddJobUtility.GetJobName(1, siteSettings.HangfireJobs), "default", siteSettings.SyncConfig.SyncEventsCron, action => action.SyncEvent(default));
+            _schedulerProvider.AddRecurringJob<ISyncAppService>(CanAddJobUtility.GetJobName(1, siteSettings.HangfireJobs), "default", siteSettings.SyncConfig.SyncEventsCron, action => action.SyncEvents(default));
+        if (CanAddJobUtility.CanAddJob(2, siteSettings.HangfireJobs))
+            _schedulerProvider.AddRecurringJob<ISyncAppService>(CanAddJobUtility.GetJobName(2, siteSettings.HangfireJobs), "default", siteSettings.SyncConfig.SyncUsersCron, action => action.SyncUsers(default));
     }
 
-    public async Task SyncEvent(CancellationToken cancellationToken)
+    public async Task SyncEvents(CancellationToken cancellationToken)
     {
         var lastIndex = await _eventsProcessedService.GetLastIndex(cancellationToken);
 
@@ -75,6 +83,30 @@ public class SyncAppService : ISyncAppService
             }
         }
 
+    }
+
+    public async Task SyncUsers(CancellationToken cancellationToken)
+    {
+        var result = new List<UserChildDto>();
+
+        HttpContent httpContent = new StringContent("application/json");
+        var httpResult = await _clientFactory
+            .CreateClient("CosecAPI")
+            .PostAsync($"user?action=get;range=all;format=json",
+                httpContent, cancellationToken);
+
+        var response = await httpResult.Content.ReadAsStringAsync(cancellationToken);
+
+        if (!response.Contains("No records found"))
+        {
+            var usersInDatabase = await _userService.GetAll(cancellationToken);
+            var usersInApi = JsonConvert.DeserializeObject<UserDto>(response).Users;
+
+            result.AddRange(usersInApi.Where(user => usersInDatabase.All(x => x.Id != int.Parse(user.id))));
+
+            if (result.Any())
+                await _userQueryServices.BulkInsert(result, cancellationToken);
+        }
     }
 
     #endregion

@@ -6,5 +6,7 @@ namespace App.Domain.Core.AccessControl.CosecApi.AppServices;
 public interface ISyncAppService: IScopedDependency
 {
     void AddRecurringJobs(SiteSettings siteSettings);
-    Task SyncEvent(CancellationToken  cancellationToken);
+    Task SyncEvents(CancellationToken  cancellationToken);
+    Task SyncUsers(CancellationToken cancellationToken);
+
 }
