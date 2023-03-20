@@ -2,8 +2,7 @@
 using Framework.Core.Markers;
 
 namespace App.Domain.Core.AccessControl.CosecApi.QueryServices;
-
-public interface IEventsQueryService : IScopedDependency
+public interface IDeviceQueryServices : IScopedDependency
 {
-    Task BulkInsert(EventDto model, CancellationToken cancellationToken);
+    Task BulkInsert(List<DeviceChildDto> model, CancellationToken cancellationToken);
 }

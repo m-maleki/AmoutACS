@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
 namespace App.Infra.Data.QueryServices.SqlServer.Dapper.AccessControl;
 
-public class EventsQueryService: IEventsQueryService
+public class EventsQueryService: IEventsQueryServices
 {
     #region Fields
 

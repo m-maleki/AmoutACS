@@ -19,9 +19,11 @@ public class SyncAppService : ISyncAppService
     private readonly ISchedulerProvider _schedulerProvider;
     private readonly IHttpClientFactory _clientFactory;
     private readonly IEventsProcessedService _eventsProcessedService;
-    private readonly IEventsQueryService _eventsQueryService;
+    private readonly IEventsQueryServices _eventsQueryService;
     private readonly IUserService _userService;
     private readonly IUserQueryServices _userQueryServices;
+    private readonly IDeviceService _deviceService;
+    private readonly IDeviceQueryServices _deviceQueryServices;
     #endregion
 
     #region Ctor
@@ -29,9 +31,11 @@ public class SyncAppService : ISyncAppService
     public SyncAppService(ISchedulerProvider schedulerProvider,
         IHttpClientFactory clientFactory,
         IEventsProcessedService eventsProcessedService,
-        IEventsQueryService eventsQueryService,
+        IEventsQueryServices eventsQueryService,
         IUserService userService,
-        IUserQueryServices userQueryServices)
+        IUserQueryServices userQueryServices, 
+        IDeviceService deviceService,
+        IDeviceQueryServices deviceQueryServices)
     {
         _schedulerProvider = schedulerProvider;
         _clientFactory = clientFactory;
@@ -39,6 +43,8 @@ public class SyncAppService : ISyncAppService
         _eventsQueryService = eventsQueryService;
         _userService = userService;
         _userQueryServices = userQueryServices;
+        _deviceService = deviceService;
+        _deviceQueryServices = deviceQueryServices;
     }
 
     #endregion
@@ -51,6 +57,9 @@ public class SyncAppService : ISyncAppService
             _schedulerProvider.AddRecurringJob<ISyncAppService>(CanAddJobUtility.GetJobName(1, siteSettings.HangfireJobs), "default", siteSettings.SyncConfig.SyncEventsCron, action => action.SyncEvents(default));
         if (CanAddJobUtility.CanAddJob(2, siteSettings.HangfireJobs))
             _schedulerProvider.AddRecurringJob<ISyncAppService>(CanAddJobUtility.GetJobName(2, siteSettings.HangfireJobs), "default", siteSettings.SyncConfig.SyncUsersCron, action => action.SyncUsers(default));
+        if (CanAddJobUtility.CanAddJob(3, siteSettings.HangfireJobs))
+            _schedulerProvider.AddRecurringJob<ISyncAppService>(CanAddJobUtility.GetJobName(3, siteSettings.HangfireJobs), "default", siteSettings.SyncConfig.SyncDevicesCron, action => action.SyncDevices(default));
+
     }
 
     public async Task SyncEvents(CancellationToken cancellationToken)
@@ -104,6 +113,26 @@ public class SyncAppService : ISyncAppService
 
             if (usersInApi.Any())
                 await _userQueryServices.BulkInsert(usersInApi, cancellationToken);
+        }
+    }
+
+    public async Task SyncDevices(CancellationToken cancellationToken)
+    {
+        var result = new List<UserChildDto>();
+
+        HttpContent httpContent = new StringContent("application/json");
+        var httpResult = await _clientFactory
+            .CreateClient("CosecAPI")
+            .PostAsync($"device?action=get;format=json",
+                httpContent, cancellationToken);
+
+        var response = await httpResult.Content.ReadAsStringAsync(cancellationToken);
+
+        if (!response.Contains("No records found"))
+        {
+            var Devices = JsonConvert.DeserializeObject<DeviceDto>(response).Devices;
+            await _deviceService.DeleteAll(cancellationToken);
+            await _deviceQueryServices.BulkInsert(Devices,cancellationToken);
         }
     }
 

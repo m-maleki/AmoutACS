@@ -8,5 +8,5 @@ public interface ISyncAppService: IScopedDependency
     void AddRecurringJobs(SiteSettings siteSettings);
     Task SyncEvents(CancellationToken  cancellationToken);
     Task SyncUsers(CancellationToken cancellationToken);
-
+    Task SyncDevices(CancellationToken cancellationToken);
 }
