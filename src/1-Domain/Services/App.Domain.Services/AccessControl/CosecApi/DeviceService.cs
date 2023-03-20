@@ -23,6 +23,12 @@ public class DeviceService : IDeviceService
     public async Task DeleteAll(CancellationToken cancellationToken)
         => await _deviceRepository.DeleteAll(cancellationToken);
 
+    public async Task<int> GetCount(CancellationToken cancellationToken)
+        => await _deviceRepository.GetCount(cancellationToken);
+
+    public async Task<int> GetActiveDevicesCount(CancellationToken cancellationToken)
+        => await _deviceRepository.GetActiveDevicesCount(cancellationToken);
+
     #endregion
 }
 

@@ -29,6 +29,8 @@ namespace App.Infra.Data.Db.SqlServer.Ef.Entities.AccessControl
         public int Grade { get; set; }
         public int LeaveGroup { get; set; }
         public int AccessLevel { get; set; }
+        public int enrolled_fingers { get; set; }
+        public int enrolled_faces { get; set; }
     }
 
     public class UserDbEntityConfig : IEntityTypeConfiguration<UserDbEntity>

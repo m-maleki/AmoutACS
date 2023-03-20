@@ -28,6 +28,12 @@ public class DeviceRepository : IDeviceRepository
         await _appDbContext.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task<int> GetCount(CancellationToken cancellationToken)
+        => await _appDbContext.Devices.CountAsync(cancellationToken);
+
+    public async Task<int> GetActiveDevicesCount(CancellationToken cancellationToken)
+        => await _appDbContext.Devices.CountAsync(x => x.Status == "connected", cancellationToken);
+
     #endregion
 
 

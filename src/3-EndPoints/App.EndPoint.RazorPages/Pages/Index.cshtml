@@ -1,10 +1,61 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "داشبرد اکسس کنترل";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-lg-3 col-6">
+            <div class="stat-box bg-cyan shadow">
+                <a asp-page="./Users/Index">
+                    <div class="stat">
+                        <div class="counter-down">@Model.UserCount</div>
+                        <div class="h3">کاربران</div>
+                    </div><!-- /.stat -->
+                    <div class="visual">
+                        <i class="icon-user"></i>
+                    </div><!-- /.visual -->
+                </a>
+            </div><!-- /.stat-box -->
+        </div><!-- /.col-lg-3 -->
+        <div class="col-lg-3 col-6">
+            <div class="stat-box bg-blue shadow">
+                <a asp-page="./Device/Index">
+                    <div class="stat">
+                        <div class="counter-down">@Model.ActiveDeviceCount</div>
+                        <div class="h3">دستگاه های فعال</div>
+                    </div><!-- /.stat -->
+                    <div class="visual">
+                        <i class="icon-printer"></i>
+                    </div><!-- /.visual -->
+                </a>
+            </div><!-- /.stat-box -->
+        </div><!-- /.col-lg-3 -->
+        <div class="col-lg-3 col-6">
+            <div class="stat-box bg-orange shadow">
+                <a asp-page="./Event/Index">
+                    <div class="stat">
+                        <div class="counter-down">@Model.EventCount</div>
+                        <div class="h3">تردد های امروز</div>
+                    </div><!-- /.stat -->
+                    <div class="visual">
+                        <i class="icon-docs"></i>
+                    </div><!-- /.visual -->
+                </a>
+            </div><!-- /.stat-box -->
+        </div><!-- /.col-lg-3 -->
+        <div class="col-lg-3 col-6">
+            <div class="stat-box bg-red shadow">
+                <a asp-page="./Device/Index">
+                    <div class="stat">
+                        <div class="counter-down">@Model.DeActiveDeviceCount</div>
+                        <div class="h3">دستگاه های غیرفعال</div>
+                    </div><!-- /.stat -->
+                    <div class="visual">
+                        <i class="icon-tag"></i>
+                    </div><!-- /.visual -->
+                </a>
+            </div><!-- /.stat-box -->
+        </div><!-- /.col-lg-3 -->
+    </div>
 </div>

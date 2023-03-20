@@ -43,7 +43,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework", "framework", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Core", "framework\New folder\Framework.Core\Framework.Core.csproj", "{615C0553-7582-4B90-81E8-44051AAAC817}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.EndPoint.RazorPages", "src\3-EndPoints\App.EndPoint.RazorPages\App.EndPoint.RazorPages.csproj", "{34C82811-9697-4951-920B-526C8B30A544}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.EndPoint.RazorPages", "src\3-EndPoints\App.EndPoint.RazorPages\App.EndPoint.RazorPages.csproj", "{34C82811-9697-4951-920B-526C8B30A544}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

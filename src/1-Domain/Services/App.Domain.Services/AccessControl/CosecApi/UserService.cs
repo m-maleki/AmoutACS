@@ -29,6 +29,9 @@ public class UserService : IUserService
     public async Task DeleteAll(CancellationToken cancellationToken)
         => await _userRepository.DeleteAll(cancellationToken);
 
+    public async Task<int> GetCount(CancellationToken cancellationToken)
+        => await _userRepository.GetCount(cancellationToken);
+
     #endregion
 }
 

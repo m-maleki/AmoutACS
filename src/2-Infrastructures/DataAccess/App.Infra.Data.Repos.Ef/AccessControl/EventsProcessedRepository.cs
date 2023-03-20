@@ -10,7 +10,7 @@ public class EventsProcessedRepository : IEventsProcessedRepository
 {
     #region Fields
 
-    private readonly AppDbContext _context;
+    private readonly AppDbContext _appDbContext;
 
     #endregion
 
@@ -18,7 +18,7 @@ public class EventsProcessedRepository : IEventsProcessedRepository
 
     public EventsProcessedRepository(AppDbContext context)
     {
-        _context = context;
+        _appDbContext = context;
     }
 
     #endregion
@@ -34,18 +34,19 @@ public class EventsProcessedRepository : IEventsProcessedRepository
             CreateAt = DateTime.Now,
         };
 
-        await _context.EventsProcessed.AddAsync(entity, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        await _appDbContext.EventsProcessed.AddAsync(entity, cancellationToken);
+        await _appDbContext.SaveChangesAsync(cancellationToken);
     }
 
     public async Task<int> GetLastIndex(CancellationToken cancellationToken)
     {
-        var result = await _context.EventsProcessed
+        var result = await _appDbContext.EventsProcessed
             .OrderByDescending(x => x.LastIndexNo)
             .FirstOrDefaultAsync(cancellationToken);
 
         return result?.LastIndexNo ?? 0;
     }
+
 
     #endregion
 }

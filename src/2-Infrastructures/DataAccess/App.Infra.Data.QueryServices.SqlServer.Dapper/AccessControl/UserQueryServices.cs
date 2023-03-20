@@ -1,8 +1,8 @@
-﻿using App.Domain.Core.AccessControl.CosecApi.Dtos;
-using App.Domain.Core.AccessControl.CosecApi.QueryServices;
-using Framework.Core.Configs;
+﻿using Framework.Core.Configs;
 using System.Data;
 using System.Data.SqlClient;
+using App.Domain.Core.AccessControl.CosecApi.Dtos;
+using App.Domain.Core.AccessControl.CosecApi.QueryServices;
 
 namespace App.Infra.Data.QueryServices.SqlServer.Dapper.AccessControl;
 
@@ -48,6 +48,8 @@ public class UserQueryServices : IUserQueryServices
         table.Columns.Add("Grade", typeof(int));
         table.Columns.Add("LeaveGroup", typeof(int));
         table.Columns.Add("AccessLevel", typeof(int));
+        table.Columns.Add("enrolled_fingers", typeof(int));
+        table.Columns.Add("enrolled_faces", typeof(int));
 
         foreach (var userChildDto in model)
         {
@@ -58,7 +60,8 @@ public class UserQueryServices : IUserQueryServices
         model.ForEach(x =>
             table.Rows.Add(x.id, x.referencecode, x.name, x.shortname, x.fullname,
                 x.active, x.pin, x.card1, x.card2, x.accessvaliditydate, x.organization, x.branch,
-                x.department, x.designation, x.section, x.category, x.grade, x.leave_group, x.accesslevel));
+                x.department, x.designation, x.section, x.category, x.grade, x.leave_group, x.accesslevel,
+                x.enrolled_fingers,x.enrolled_faces));
 
         await using var connection = new SqlConnection(_siteSettings.ConnectionStrings.AppDb);
         await connection.OpenAsync(cancellationToken);

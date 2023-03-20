@@ -1,4 +1,5 @@
-﻿using App.Domain.Core.AccessControl.CosecApi.Data.Repositories;
+﻿using System.Formats.Asn1;
+using App.Domain.Core.AccessControl.CosecApi.Data.Repositories;
 using App.Domain.Core.AccessControl.CosecApi.Dtos;
 using App.Infra.Data.Db.SqlServer.Ef.DbContexts;
 using App.Infra.Data.Db.SqlServer.Ef.Entities.AccessControl;
@@ -28,7 +29,7 @@ public class UserRepository : IUserRepository
     {
         var result = await _appDbContext.Users
             .AsNoTracking()
-            .Select(x=> new UserOutputDto
+            .Select(x => new UserOutputDto
             {
                 Id = x.Id,
                 ReferenceCode = x.ReferenceCode,
@@ -36,7 +37,7 @@ public class UserRepository : IUserRepository
                 ShortName = x.ShortName,
                 FullName = x.FullName,
                 Active = x.Active,
-                Pin= x.Pin,
+                Pin = x.Pin,
                 Card1 = x.Card1,
                 Card2 = x.Card2,
                 AccessValidityDate = x.AccessValidityDate,
@@ -48,17 +49,20 @@ public class UserRepository : IUserRepository
                 Category = x.Category,
                 Grade = x.Grade,
                 LeaveGroup = x.LeaveGroup,
-                AccessLevel = x.AccessLevel
+                AccessLevel = x.AccessLevel,
+                enrolled_faces = x.enrolled_faces ,
+                enrolled_fingers = x.enrolled_fingers
 
             }).ToListAsync(cancellationToken);
 
         return result;
     }
-
+    public async Task<int> GetCount(CancellationToken cancellationToken)
+        => await _appDbContext.Users.CountAsync(cancellationToken);
     public async Task DeleteAll(CancellationToken cancellationToken)
     {
-         _appDbContext.Users.RemoveRange(_appDbContext.Users);
-         await _appDbContext.SaveChangesAsync(cancellationToken);
+        _appDbContext.Users.RemoveRange(_appDbContext.Users);
+        await _appDbContext.SaveChangesAsync(cancellationToken);
     }
 
     #endregion

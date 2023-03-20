@@ -1,8 +1,9 @@
-﻿using App.Domain.Core.AccessControl.CosecApi.Dtos;
-using App.Domain.Core.AccessControl.CosecApi.QueryServices;
-using Framework.Core.Configs;
+﻿using Framework.Core.Configs;
 using System.Data;
 using System.Data.SqlClient;
+using App.Domain.Core.AccessControl.CosecApi.Dtos;
+using App.Domain.Core.AccessControl.CosecApi.QueryServices;
+using Framework.Core.Utilities;
 
 namespace App.Infra.Data.QueryServices.SqlServer.Dapper.AccessControl;
 
@@ -41,7 +42,7 @@ public class EventsQueryService: IEventsQueryServices
         table.Columns.Add("CreateAt", typeof(DateTime));
 
         model.Events.ForEach(x =>
-            table.Rows.Add(null, x.indexno, x.userid, x.username, DateTimeCorrection(x.eventdatetime),
+            table.Rows.Add(null, x.indexno, x.userid, x.username, x.eventdatetime.ToCorrectDateTimeString(),
                 x.entryexittype, x.mastercontrollerid, x.doorcontrollerid, x.specialfunctionid,
                 x.leavedt, x.idatetime));
 
@@ -59,19 +60,6 @@ public class EventsQueryService: IEventsQueryServices
 
     }
 
-
-    #endregion
-
-    #region PrivateMethods
-
-    private string DateTimeCorrection(string date)
-    {
-        var day = date.Substring(0, 2);
-        var month = date.Substring(3, 2);
-        var year = date.Substring(6, 4);
-        var time = date.Substring(11, 8);
-        return $"{month}-{day}-{year} {time}";
-    }
 
     #endregion
 }

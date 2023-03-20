@@ -2,8 +2,6 @@ using App.Domain.Core._Providers.Scheduler.Service;
 using App.EndPoint.RazorPages.Infrastructures;
 using App.Infra._3rdParties.Scheduler.hangfire._IocConfigs;
 using App.Infra._3rdParties.Scheduler.hangfire.Dto;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using System.Text;
 using App.Domain.AppServices;
 using App.Domain.Core;

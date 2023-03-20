@@ -1,17 +1,14 @@
 ﻿using App.Domain.Core._Providers.Scheduler.Service;
-using App.Domain.Core.AccessControl.CosecApi.AppServices;
 using Framework.Core.Configs;
 using Framework.Core.Utilities;
 using System.Text;
-using Newtonsoft.Json;
+using App.Domain.Core.AccessControl.CosecApi.AppServices;
 using App.Domain.Core.AccessControl.CosecApi.Dtos;
 using App.Domain.Core.AccessControl.CosecApi.QueryServices;
 using App.Domain.Core.AccessControl.CosecApi.Services;
-using App.Infra.Data.Db.SqlServer.Ef.DbContexts;
-using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace App.Domain.AppServices.AccessControl.CosecApi;
-
 public class SyncAppService : ISyncAppService
 {
     #region Fields
@@ -123,7 +120,7 @@ public class SyncAppService : ISyncAppService
         HttpContent httpContent = new StringContent("application/json");
         var httpResult = await _clientFactory
             .CreateClient("CosecAPI")
-            .PostAsync($"device?action=get;format=json",
+            .PostAsync($"device?action=list;format=json",
                 httpContent, cancellationToken);
 
         var response = await httpResult.Content.ReadAsStringAsync(cancellationToken);
