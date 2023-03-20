@@ -55,6 +55,12 @@ public class UserRepository : IUserRepository
         return result;
     }
 
+    public async Task DeleteAll(CancellationToken cancellationToken)
+    {
+         _appDbContext.Users.RemoveRange(_appDbContext.Users);
+         await _appDbContext.SaveChangesAsync(cancellationToken);
+    }
+
     #endregion
 
 }

@@ -6,4 +6,5 @@ namespace App.Domain.Core.AccessControl.CosecApi.Data.Repositories;
 public interface IUserRepository : IScopedDependency
 {
     Task<List<UserOutputDto>> GetAll(CancellationToken cancellationToken);
+    Task DeleteAll(CancellationToken cancellationToken);
 }

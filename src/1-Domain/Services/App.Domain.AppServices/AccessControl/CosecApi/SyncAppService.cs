@@ -99,13 +99,11 @@ public class SyncAppService : ISyncAppService
 
         if (!response.Contains("No records found"))
         {
-            var usersInDatabase = await _userService.GetAll(cancellationToken);
+            await _userService.DeleteAll(cancellationToken);
             var usersInApi = JsonConvert.DeserializeObject<UserDto>(response).Users;
 
-            result.AddRange(usersInApi.Where(user => usersInDatabase.All(x => x.Id != int.Parse(user.id))));
-
-            if (result.Any())
-                await _userQueryServices.BulkInsert(result, cancellationToken);
+            if (usersInApi.Any())
+                await _userQueryServices.BulkInsert(usersInApi, cancellationToken);
         }
     }
 
