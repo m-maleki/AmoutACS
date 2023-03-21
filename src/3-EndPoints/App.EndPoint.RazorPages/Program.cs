@@ -62,7 +62,9 @@ builder.Host
     });
 
 var siteSettings = builder.Services.Add_SettingAndConfig(configuration);
+
 builder.Services.Add_AppDbContext(siteSettings.ConnectionStrings.AppDb);
+builder.Services.Add_CosecDbContext(siteSettings.ConnectionStrings.CosecDb);
 
 builder.Services.Add_SchedulerProviders(siteSettings.ConnectionStrings.SqlDBHangFire);
 
@@ -77,7 +79,8 @@ builder.Services.AddHttpClient("CosecAPI", client =>
 });
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages()
+    .AddRazorRuntimeCompilation();
 
 var app = builder.Build();
 

@@ -12,6 +12,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\framework\New folder\Framework.Core\Framework.Core.csproj" />
+    <ProjectReference Include="..\..\..\2-Infrastructures\Db\App.Infra.Data.Db.SqlServer.Ef\App.Infra.Data.Db.SqlServer.Ef.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CosecApi\Data\Repositories\" />
   </ItemGroup>
 
 </Project>

@@ -347,8 +347,8 @@ li.dropdown .dropdown-menu{
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active{
     background: #159eb6;
 }
-.btn-success{
-    background: #8cc63f;
+.btn-success {
+    background: #63bd91;
 }
 .btn-success:hover, .btn-success:focus, .btn-success:active{
     background: #3cc127;

@@ -1,0 +1,129 @@
+﻿@page
+@model App.EndPoint.RazorPages.Pages.Access.IndexModel
+@{
+    ViewBag.Title = "مدیریت دسترسی ها";
+}
+
+<br />
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>شناسه کاربری</th>
+            <th>نام</th>
+            <th>نام خانوادگی</th>
+            <th>اثر انگشت</th>
+            <th>چهره</th>
+            <th>وضعیت</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td>@Model.User.Id</td>
+            <td>@Model.User.Name</td>
+            <td>@Model.User.FullName</td>
+            <td>@Model.User.enrolled_fingers</td>
+            <td>@Model.User.enrolled_faces</td>
+            @{
+                if (@Model.User.Active == 1)
+                {
+                    <td>
+                        <button type="submit" class="btn btn-success curve">فعال</button>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <button type="submit" class="btn btn-danger curve">غیر فعال</button>
+                    </td>
+                }
+            }
+        </tr>
+    </tbody>
+</table>
+<hr />
+
+
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>شناسه </th>
+            <th>نام</th>
+            <th>نوع </th>
+            <th>IP Address</th>
+            <th>Mac Address</th>
+            <th>وضعیت</th>
+            <th>دسترسی کاربر</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.UserDevices)
+        {
+            <tr>
+                <td>@item.DeviceId</td>
+                <td>@item.Name</td>
+                <td>@item.DeviceType</td>
+                <td>@item.Ip</td>
+                <td>@item.Mac</td>
+                @{
+                    if (@item.Status == "connected")
+                    {
+                        <td>
+                            <label class="label label-success curve">روشن</label>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <label class="label label-danger curve">خاموش</label>
+                        </td>
+                    }
+                    if (@item.UserAccess == true)
+                    {
+                        <td>
+                            <form method="post" asp-page-handler="Revoke">
+                                <input type="hidden" name="deviceId" value="@item.DeviceId">
+                                <input type="hidden" name="userId" value="@Model.User.Id">
+                                <button id="btn-success" type="submit" class="btn btn-lg btn-success curve">دارای دسترسی</button>
+                            </form>
+                        </td>
+                    }
+                    if (@item.UserAccess == false)
+                    {
+                        <td>
+                            <form method="post" asp-page-handler="Assign">
+                                <input type="hidden" name="deviceId" value="@item.DeviceId">
+                                <input type="hidden" name="userId" value="@Model.User.Id">
+                                <button id="btn-success" type="submit" class="btn btn-lg btn-warning curve">بدون دسترسی</button>
+                            </form>
+                        </td>
+                    }
+
+                }
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    if (Model.ShowMessage == true)
+    {
+@section masterjs
+{
+    <script defer>
+        {
+            swal(
+                'تغییر دسترسی با موفقیت انجام شد',
+                '',
+                'success');
+        };
+    </script>
+}
+    }
+}
+
+
+
+
+

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 
-namespace App.Infra.Data.Db.SqlServer.Ef.Entities.AccessControl;
+namespace App.Infra.Data.Db.SqlServer.Ef.Entities.App;
 
 public class EventsProcessedDbEntity
 {

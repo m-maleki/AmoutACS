@@ -1,4 +1,4 @@
-﻿using App.Infra.Data.Db.SqlServer.Ef.Entities.AccessControl;
+﻿using App.Infra.Data.Db.SqlServer.Ef.Entities.App;
 using Microsoft.EntityFrameworkCore;
 
 namespace App.Infra.Data.Db.SqlServer.Ef.DbContexts;

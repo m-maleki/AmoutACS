@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using App.Domain.Core.AccessControl.CosecApi.Dtos;
 using App.Domain.Core.AccessControl.CosecApi.QueryServices;
+using Framework.Core.Utilities;
 
 namespace App.Infra.Data.QueryServices.SqlServer.Dapper.AccessControl;
 
@@ -55,6 +56,9 @@ public class UserQueryServices : IUserQueryServices
         {
             if (string.IsNullOrEmpty(userChildDto.accessvaliditydate))
                 userChildDto.accessvaliditydate = null;
+            else
+                userChildDto.accessvaliditydate = userChildDto.accessvaliditydate.ToCorrectDateTimeString();
+
         }
 
         model.ForEach(x =>

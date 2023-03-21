@@ -1,7 +1,8 @@
-﻿using App.Domain.Core.AccessControl.CosecApi.Data.Repositories;
-using App.Domain.Core.AccessControl.CosecApi.Services;
+﻿using App.Domain.Core.Cosec.Data.Repositories;
+using App.Domain.Core.Cosec.Services;
+using App.Domain.Core.CosecApi.Dtos;
 
-namespace App.Domain.Services.AccessControl.CosecApi;
+namespace App.Domain.Services.AccessControl.Cosec;
 public class DeviceService : IDeviceService
 {
     #region Fields
@@ -28,6 +29,12 @@ public class DeviceService : IDeviceService
 
     public async Task<int> GetActiveDevicesCount(CancellationToken cancellationToken)
         => await _deviceRepository.GetActiveDevicesCount(cancellationToken);
+
+    public async Task<List<DeviceOutputDto>> GetAll(CancellationToken cancellationToken)
+        => await _deviceRepository.GetAll(cancellationToken);
+
+    public async Task<int> GetDeviceTypeWithDeviceId(int deviceId, CancellationToken cancellationToken)
+        => await _deviceRepository.GetDeviceTypeWithDeviceId(deviceId, cancellationToken);
 
     #endregion
 }

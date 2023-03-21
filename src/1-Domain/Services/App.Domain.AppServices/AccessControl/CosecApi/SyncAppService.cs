@@ -5,8 +5,10 @@ using System.Text;
 using App.Domain.Core.AccessControl.CosecApi.AppServices;
 using App.Domain.Core.AccessControl.CosecApi.Dtos;
 using App.Domain.Core.AccessControl.CosecApi.QueryServices;
-using App.Domain.Core.AccessControl.CosecApi.Services;
 using Newtonsoft.Json;
+using App.Domain.Core.Cosec.Services;
+using App.Domain.Core.CosecApi.Services;
+using System.Threading;
 
 namespace App.Domain.AppServices.AccessControl.CosecApi;
 public class SyncAppService : ISyncAppService
@@ -21,6 +23,7 @@ public class SyncAppService : ISyncAppService
     private readonly IUserQueryServices _userQueryServices;
     private readonly IDeviceService _deviceService;
     private readonly IDeviceQueryServices _deviceQueryServices;
+    private readonly ICosecApiService _cosecApiService;
     #endregion
 
     #region Ctor
@@ -32,7 +35,7 @@ public class SyncAppService : ISyncAppService
         IUserService userService,
         IUserQueryServices userQueryServices, 
         IDeviceService deviceService,
-        IDeviceQueryServices deviceQueryServices)
+        IDeviceQueryServices deviceQueryServices, ICosecApiService cosecApiService)
     {
         _schedulerProvider = schedulerProvider;
         _clientFactory = clientFactory;
@@ -42,6 +45,7 @@ public class SyncAppService : ISyncAppService
         _userQueryServices = userQueryServices;
         _deviceService = deviceService;
         _deviceQueryServices = deviceQueryServices;
+        _cosecApiService = cosecApiService;
     }
 
     #endregion
@@ -63,13 +67,9 @@ public class SyncAppService : ISyncAppService
     {
         var lastIndex = await _eventsProcessedService.GetLastIndex(cancellationToken);
 
-        HttpContent httpContent = new StringContent("application/json");
-        var httpResult = await _clientFactory
-            .CreateClient("CosecAPI")
-            .PostAsync($"event-ta?action=get;format=json;index={lastIndex+1}",
-                httpContent, cancellationToken);
+        var url = $"event-ta?action=get;format=json;index={lastIndex + 1}";
 
-        var response = await httpResult.Content.ReadAsStringAsync(cancellationToken);
+        var response = await _cosecApiService.CallApi(url, cancellationToken);
     
         if (!response.Contains("No records found"))
         {
@@ -93,15 +93,9 @@ public class SyncAppService : ISyncAppService
 
     public async Task SyncUsers(CancellationToken cancellationToken)
     {
-        var result = new List<UserChildDto>();
+        const string url = $"user?action=get;range=all;format=json";
 
-        HttpContent httpContent = new StringContent("application/json");
-        var httpResult = await _clientFactory
-            .CreateClient("CosecAPI")
-            .PostAsync($"user?action=get;range=all;format=json",
-                httpContent, cancellationToken);
-
-        var response = await httpResult.Content.ReadAsStringAsync(cancellationToken);
+        var response = await _cosecApiService.CallApi(url, cancellationToken);
 
         if (!response.Contains("No records found"))
         {
@@ -113,24 +107,47 @@ public class SyncAppService : ISyncAppService
         }
     }
 
+    public async Task ReSyncUser(int userId,CancellationToken cancellationToken)
+    {
+        var url = $"user?action=get;id={userId};format=json";
+
+        var response = await _cosecApiService.CallApi(url, cancellationToken);
+
+        if (!response.Contains("does not exist"))
+        {
+            var user = JsonConvert.DeserializeObject<UserDto>(response).Users.FirstOrDefault();
+
+            if (user != null)
+                await _userService.Update(user, cancellationToken);
+        }
+    }
+
     public async Task SyncDevices(CancellationToken cancellationToken)
     {
-        var result = new List<UserChildDto>();
+        const string url = $"device?action=list;format=json";
 
-        HttpContent httpContent = new StringContent("application/json");
-        var httpResult = await _clientFactory
-            .CreateClient("CosecAPI")
-            .PostAsync($"device?action=list;format=json",
-                httpContent, cancellationToken);
-
-        var response = await httpResult.Content.ReadAsStringAsync(cancellationToken);
+        var response =  await _cosecApiService.CallApi(url, cancellationToken);
 
         if (!response.Contains("No records found"))
         {
-            var Devices = JsonConvert.DeserializeObject<DeviceDto>(response).Devices;
+            var devices = JsonConvert.DeserializeObject<DeviceDto>(response).Devices;
             await _deviceService.DeleteAll(cancellationToken);
-            await _deviceQueryServices.BulkInsert(Devices,cancellationToken);
+            await _deviceQueryServices.BulkInsert(devices,cancellationToken);
         }
+    }
+
+    public async Task<UserChildDto?> GetUser(int userId, CancellationToken cancellationToken)
+    {
+        var url = $"user?action=get;id={userId};format=json";
+
+        var response = await _cosecApiService.CallApi(url, cancellationToken);
+
+        if (!response.Contains("does not exist"))
+        {
+            var user = JsonConvert.DeserializeObject<UserDto>(response).Users.FirstOrDefault();
+            return user;
+        }
+        return new UserChildDto();
     }
 
     #endregion

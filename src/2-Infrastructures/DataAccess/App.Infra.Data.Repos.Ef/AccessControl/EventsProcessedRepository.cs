@@ -1,7 +1,7 @@
-﻿using App.Domain.Core.AccessControl.CosecApi.Data.Repositories;
-using App.Domain.Core.AccessControl.CosecApi.Dtos;
+﻿using App.Domain.Core.AccessControl.CosecApi.Dtos;
+using App.Domain.Core.Cosec.Data.Repositories;
 using App.Infra.Data.Db.SqlServer.Ef.DbContexts;
-using App.Infra.Data.Db.SqlServer.Ef.Entities.AccessControl;
+using App.Infra.Data.Db.SqlServer.Ef.Entities.App;
 using Microsoft.EntityFrameworkCore;
 
 namespace App.Infra.Data.Repos.Ef.AccessControl;

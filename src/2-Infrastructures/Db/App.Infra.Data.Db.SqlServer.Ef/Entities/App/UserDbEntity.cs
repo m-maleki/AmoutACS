@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Infra.Data.Db.SqlServer.Ef.Entities.AccessControl
+namespace App.Infra.Data.Db.SqlServer.Ef.Entities.App
 {
     public class UserDbEntity
     {

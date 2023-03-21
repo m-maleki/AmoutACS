@@ -1,7 +1,7 @@
 ﻿using App.Domain.Core.AccessControl.CosecApi.Dtos;
 using Framework.Core.Markers;
 
-namespace App.Domain.Core.AccessControl.CosecApi.Services;
+namespace App.Domain.Core.Cosec.Services;
 
 public interface IEventsProcessedService : IScopedDependency
 {

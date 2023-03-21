@@ -1,6 +1,13 @@
 ﻿using App.Domain.Core.AccessControl.AppServices;
 using App.Domain.Core.AccessControl.CosecApi.Dtos;
-using App.Domain.Core.AccessControl.CosecApi.Services;
+using App.Domain.Core.Cosec.Services;
+using Newtonsoft.Json;
+using System.Threading;
+using App.Domain.Core.AccessControl.CosecApi.AppServices;
+using App.Domain.Core.CosecApi.Services;
+using App.Domain.Core.Cosec.Enums;
+using App.Domain.AppServices.AccessControl.CosecApi;
+using App.Domain.Core.Cosec.Dtos;
 
 namespace App.Domain.AppServices.AccessControl;
 public class UserAppService : IUserAppService
@@ -16,6 +23,7 @@ public class UserAppService : IUserAppService
     public UserAppService(IUserService userService)
     {
         _userService = userService;
+
     }
 
     #endregion
@@ -28,5 +36,9 @@ public class UserAppService : IUserAppService
     public async Task<int> GetCount(CancellationToken cancellationToken)
         => await _userService.GetCount(cancellationToken);
 
+    public async Task<UserOutputDto?> GetById(int id, CancellationToken cancellationToken)
+        => await _userService.GetById(id, cancellationToken);
+    
     #endregion
+
 }

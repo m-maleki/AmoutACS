@@ -1,7 +1,7 @@
 ﻿using App.Domain.Core.AccessControl.Services;
-using App.Domain.Core.CosecApi.Data.Repositories;
+using App.Domain.Core.Cosec.Data.Repositories;
 
-namespace App.Domain.Services.AccessControl.CosecApi;
+namespace App.Domain.Services.AccessControl.Cosec;
 public class EventService : IEventService
 {
     #region Fields

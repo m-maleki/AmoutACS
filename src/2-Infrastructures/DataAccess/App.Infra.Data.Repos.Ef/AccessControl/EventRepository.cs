@@ -1,4 +1,4 @@
-﻿using App.Domain.Core.CosecApi.Data.Repositories;
+﻿using App.Domain.Core.Cosec.Data.Repositories;
 using App.Infra.Data.Db.SqlServer.Ef.DbContexts;
 using Microsoft.EntityFrameworkCore;
 

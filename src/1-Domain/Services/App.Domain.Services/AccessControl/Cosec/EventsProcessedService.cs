@@ -1,8 +1,8 @@
-﻿using App.Domain.Core.AccessControl.CosecApi.Data.Repositories;
-using App.Domain.Core.AccessControl.CosecApi.Dtos;
-using App.Domain.Core.AccessControl.CosecApi.Services;
+﻿using App.Domain.Core.AccessControl.CosecApi.Dtos;
+using App.Domain.Core.Cosec.Data.Repositories;
+using App.Domain.Core.Cosec.Services;
 
-namespace App.Domain.Services.AccessControl.CosecApi;
+namespace App.Domain.Services.AccessControl.Cosec;
 
 public class EventsProcessedService : IEventsProcessedService
 {
