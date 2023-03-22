@@ -1,0 +1,113 @@
+﻿@page
+@model App.EndPoint.RazorPages.Pages.Account.LoginModel
+@{
+    Layout = "";
+}
+
+<html lang="fa" dir="rtl">
+
+<!-- Mirrored from www.rayanik.com/demo/modiran/light/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 30 May 2022 15:30:41 GMT -->
+<head>
+    <title>قالب مدیریتی مدیران</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="قالب مدیریت ایرانی مدیران ">
+    <meta name="keywords" content="قالب مدیریت, قالب داشبورد, قالب ادمین, قالب مدیران, قالب مدیریت راستچین , قالب ایرانی مدیریت, پوسته مدیریت, قالب ادمین داشبورد سایت, قالب مدیریتی, مدیران, قالب مدیریت مدیران, پنل مدیریت, پنل مدیریت مدرن, قالب ادمین متریال, قالب مدیریت بوت استرپ, قالب ادمین بوتسترپ, قالب ادمین سایت, پوسته مدیریتی ایرانی, قالب مدیرتی مدیران ایرانی, بهترین قالب مدیریت, قالب مدیریت ریسپانسیو, قالب مدیریت ارزان, قالب admin">
+    <link rel="shortcut icon" href="assets/images/favicon.png">
+
+    <!-- BEGIN CSS -->
+    <link href="~/assets/plugins/bootstrap/bootstrap5/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="~/assets/plugins/simple-line-icons/css/simple-line-icons.min.css" rel="stylesheet">
+    <link href="~/assets/plugins/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="~/assets/plugins/paper-ripple/dist/paper-ripple.min.css" rel="stylesheet">
+    <link href="~/assets/plugins/iCheck/skins/square/_all.css" rel="stylesheet">
+    <link href="~/assets/css/style.css" rel="stylesheet">
+    <link href="~/assets/css/colors.css" rel="stylesheet">
+    <!-- END CSS -->
+
+
+</head>
+<body class="fix-header active-ripple theme-blue">
+    <!-- BEGIN LOEADING -->
+    <div id="loader">
+        <div class="spinner"></div>
+    </div><!-- /loader -->
+    <!-- END LOEADING -->
+    <!-- BEGIN WRAPPER -->
+    <div class="fixed-modal-bg"></div>
+    <a href="#" class="btn btn-info btn-icon btn-round btn-lg" id="toggle-dark-mode">
+        <i class="icon-bulb"></i>
+    </a>
+    <div class="modal-page shadow">
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <h2 class="text-center m-b-20">ورود به سامانه اکسس کنترل</h2>
+                    <hr>
+                    <form method="POST" asp-page-handler="Login">
+                        <div class="form-group">
+                            <label for="email" class="sr-only">رایانامه</label>
+                            <div class="input-group round">
+                                <span class="input-group-addon">
+                                    <i class="icon-envelope"></i>
+                                </span>
+                                <input name="email" class="form-control ltr text-left" type="email" name="email" required>
+                            </div><!-- /.input-group -->
+                        </div><!-- /.form-group -->
+                        <div class="form-group">
+                            <label for="password" class="sr-only">رمز عبور</label>
+                            <div class="input-group round">
+                                <span class="input-group-addon">
+                                    <i class="icon-key"></i>
+                                </span>
+                                <input name="password" class="form-control ltr text-left" type="password" minlength="5" required>
+                            </div><!-- /.input-group -->
+                        </div><!-- /.form-group -->
+                        <p>
+                            <button class="btn btn-info btn-round btn-block" type="submit">
+                                <i class="icon-paper-plane font-lg"></i>
+                                ورود
+                            </button>
+                        </p>
+                        <hr/>
+                        <div align="center" class="m-b-10">
+                            <span class="label label-@Model.CosecApi">CosceAPI</span>
+                            <span class="label label-@Model.CosecDB">CosecDB</span>
+                            <span class="label label-@Model.AcsDB">AcsDB</span>
+                        </div>
+                    </form>
+                    <hr class="m-b-30">
+                    <a href="forget.html" class="btn btn-default btn-round btn-block m-b-10">
+                        <i class="icon-refresh font-lg"></i>
+                        بازیابی رمز  عبور
+                    </a>
+                    <a href="register.html" class="btn btn-default btn-round btn-block">
+                        <i class="icon-user-follow font-lg"></i>
+                        حساب ندارید، ثبت نام کنید!
+                    </a>
+                </div><!-- /.col-md-12 -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div><!-- /.modal-page -->
+    <!-- END WRAPPER -->
+    <!-- BEGIN JS -->
+    <script src="~/assets/plugins/jquery/dist/jquery-3.1.0.js"></script>
+    <script src="~/assets/plugins/jquery-migrate/jquery-migrate-1.2.1.min.js"></script>
+    <script src="~/assets/plugins/bootstrap/bootstrap5/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/plugins/paper-ripple/dist/PaperRipple.min.js"></script>
+    <script src="~/assets/plugins/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="~/assets/plugins/iCheck/icheck.min.js"></script>
+    <script src="~/assets/plugins/iCheck/icheck.min.js"></script>
+    <script src="~/assets/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/assets/plugins/jquery-validation/src/localization/messages_fa.js"></script>
+    <script src="~/assets/js/core.js"></script>
+
+    <!-- BEGIN PAGE JAVASCRIPT -->
+    <script src="assets/js/pages/login.js"></script>
+    <!-- END PAGE JAVASCRIPT -->
+
+</body>
+
+<!-- Mirrored from www.rayanik.com/demo/modiran/light/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 30 May 2022 15:30:42 GMT -->
+</html>

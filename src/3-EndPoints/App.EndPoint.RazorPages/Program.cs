@@ -8,13 +8,17 @@ using App.Domain.Core;
 using App.Domain.Core.AccessControl.CosecApi.AppServices;
 using App.Domain.Services;
 using App.Infra.Data.Db.SqlServer.Ef;
+using App.Infra.Data.Db.SqlServer.Ef.DbContexts;
 using App.Infra.Data.QueryServices.SqlServer.Dapper;
 using App.Infra.Data.Repos.Ef;
 using App.Infra.Data.Repos.Ef._IocConfigs;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Framework.Core.Markers;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using sFramework.Core;
+using Autofac.Core;
 
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -64,7 +68,10 @@ builder.Host
 var siteSettings = builder.Services.Add_SettingAndConfig(configuration);
 
 builder.Services.Add_AppDbContext(siteSettings.ConnectionStrings.AppDb);
+builder.Services.Add_AccountDbContext(siteSettings.ConnectionStrings.AppDb);
 builder.Services.Add_CosecDbContext(siteSettings.ConnectionStrings.CosecDb);
+
+
 
 builder.Services.Add_SchedulerProviders(siteSettings.ConnectionStrings.SqlDBHangFire);
 
@@ -78,9 +85,35 @@ builder.Services.AddHttpClient("CosecAPI", client =>
         new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", authString);
 });
 
+
 // Add services to the container.
 builder.Services.AddRazorPages()
     .AddRazorRuntimeCompilation();
+
+builder.Services.AddDefaultIdentity<IdentityUser>
+    (options =>
+    {
+        options.SignIn.RequireConfirmedAccount = true;
+        options.Password.RequireDigit = false;
+        options.Password.RequiredLength = 6;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequireLowercase = false;
+    })
+    .AddEntityFrameworkStores<AccountDbContext>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    // Cookie settings
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+    options.LoginPath = "/Account/Login";
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+    options.SlidingExpiration = true;
+});
+
+
 
 var app = builder.Build();
 
@@ -91,16 +124,17 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseRouting();
 
+app.UseRouting();
+app.MapControllers();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
-
 
 using (var scope = app.Services.CreateScope())
 {

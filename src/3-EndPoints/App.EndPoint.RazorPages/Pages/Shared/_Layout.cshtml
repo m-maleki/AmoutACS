@@ -25,19 +25,19 @@
     <link href="~/assets/plugins/paper-ripple/dist/paper-ripple.min.css" rel="stylesheet">
     <link href="~/assets/plugins/iCheck/skins/square/_all.css" rel="stylesheet">
     <link href="~/assets/plugins/data-table/DataTables-1.10.16/css/jquery.dataTables.css" rel="stylesheet">
-
+    <script src="~/assets/plugins/chart.js/dist/chart.bundle.min.js"></script>
     <link href="assets/plugins/kamadatepicker/kamadatepicker.min.css" rel="stylesheet">
 
     <link href="~/assets/css/style.css" rel="stylesheet">
     <link href="~/assets/css/colors.css" rel="stylesheet">
     <link href="~/assets/css/Custom.css" rel="stylesheet">
-    <link href="~/css/site.css" rel="stylesheet"  />
+    <link href="~/css/site.css" rel="stylesheet" />
     <!-- END CSS -->
 </head>
 
 <body class="active-ripple theme-cyan fix-header sidebar-extra">
     <style>
-        table td,th {
+        table td, th {
             text-align: center;
         }
     </style>
@@ -46,7 +46,7 @@
         <div class="spinner"></div>
     </div><!-- /loader -->
     <!-- END LOEADING -->
-     @Html.Partial("./PartialView/_Header")
+    @Html.Partial("./PartialView/_Header")
     <!-- END HEADER -->
     <!-- BEGIN WRAPPER -->
     <div id="wrapper">
@@ -70,30 +70,7 @@
                     </div><!-- /.breadcrumb-box -->
                 </div><!-- /.col-md-12 -->
                 <!-- END BREADCRUMB -->
-
-                <div class="col-12">
-                    <div class="portlet box border shadow">
-                        <div class="portlet-heading">
-                            <div class="portlet-title">
-                                <h3 class="title">
-                                </h3>
-                            </div><!-- /.portlet-title -->
-                            <div class="buttons-box">
-                                <a class="btn btn-sm btn-default btn-round btn-fullscreen" rel="tooltip" title="تمام صفحه" href="#">
-                                    <i class="icon-size-fullscreen"></i>
-                                </a>
-                                <a class="btn btn-sm btn-default btn-round btn-collapse" rel="tooltip" title="کوچک کردن" href="#">
-                                    <i class="icon-arrow-up"></i>
-                                </a>
-                            </div><!-- /.buttons-box -->
-                        </div><!-- /.portlet-heading -->
-                        <div class="portlet-body">
-                            <div>
-                                @RenderBody()
-                            </div>
-                        </div><!-- /.portlet-body -->
-                    </div><!-- /.portlet -->
-                </div><!-- /.col-12 -->
+                @RenderBody()
             </div><!-- /.row -->
         </div><!-- /#page-content -->
         <!-- END PAGE CONTENT -->
@@ -145,7 +122,7 @@
     <script src="~/assets/js/pages/calendar-kama.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
     @RenderSection("masterjs", required: false)
-    
+
 </body>
 
 </html>

@@ -6,7 +6,7 @@
         {
             if (string.IsNullOrEmpty(str)) return null;
 
-            if (!str.Contains('-') || !str.Contains('/'))
+            if (!str.Contains("/"))
             {
                 str = str.Insert(2, "-");
                 str = str.Insert(5, "-");

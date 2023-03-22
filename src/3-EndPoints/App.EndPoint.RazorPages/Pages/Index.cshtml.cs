@@ -1,9 +1,11 @@
 ﻿using App.Domain.Core.AccessControl.AppServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace App.EndPoint.RazorPages.Pages
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly IUserAppService _userAppService;
