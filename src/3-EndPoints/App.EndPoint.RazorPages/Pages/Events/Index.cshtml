@@ -1,0 +1,72 @@
+﻿@page
+@using Framework.Core.Utilities
+@model App.EndPoint.RazorPages.Pages.Events.IndexModel
+@{
+    ViewBag.Title = "مدیریت تردد ها";
+
+}
+
+<div class="portlet-body">
+    <div class="col-lg-12">
+        <div class="portlet box border shadow">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h3 class="title">
+                        مدیریت کاربران
+                    </h3>
+                </div><!-- /.portlet-title -->
+                <div class="buttons-box">
+                    <a class="btn btn-sm btn-default btn-round btn-fullscreen" rel="tooltip" href="#">
+                        <i class="icon-size-fullscreen"></i>
+                        <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
+                    </a>
+                    <a class="btn btn-sm btn-default btn-round btn-close" rel="tooltip" href="#">
+                        <i class="icon-trash"></i>
+                        <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
+                    </a>
+                </div><!-- /.buttons-box -->
+            </div><!-- /.portlet-heading -->
+            <div class="portlet-body">
+                <table class="table table-bordered table-striped table-hover" id="data-table-events">
+                    <thead>
+                        <tr>
+                            <th>شناسه</th>
+                            <th>نام کاربر</th>
+                            <th>نام درب</th>
+                            <th>تاریخ</th>
+                            <th>روز هفته</th>
+                            <th>ساعت</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Events != null)
+                            {@foreach (var item in Model.Events)
+                            {
+                                <tr>
+                                    <td>@item.IndexNo</td>
+                                    <td>@item.Username</td>
+                                    <td>@item.DeviceName</td>
+                                    <td>@item.EventDateTime.ToPersianString()</td>
+                                    <td>@item.EventDateTime.ToPersianString("dddd")</td>
+                                    <td>@item.EventDateTime.ToString("HH:mm:ss")</td>
+                                </tr>
+                            }}
+
+                    </tbody>
+                </table>
+
+            </div><!-- /.portlet-body -->
+        </div><!-- /.portlet -->
+    </div>
+</div><!-- /.portlet-body -->
+
+@section masterjs
+{
+    <script>
+        tableMain = $('#data-table-events').DataTable({
+            "pageLength": 10,
+            "ordering": false
+        });
+    </script>
+}

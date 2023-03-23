@@ -1,0 +1,102 @@
+﻿@page
+@model App.EndPoint.RazorPages.Pages.Access.CreateModel
+@{
+    ViewBag.Title = "تعریف دسترسی جدید";
+}
+
+<div align="center" class="portlet-body">
+    <div class="col-lg-6">
+        <div class="portlet box border shadow">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h3 class="title">
+                        @ViewBag.Title
+                    </h3>
+                </div><!-- /.portlet-title -->
+                <div class="buttons-box">
+                    <a class="btn btn-sm btn-default btn-round btn-fullscreen" rel="tooltip" href="#">
+                        <i class="icon-size-fullscreen"></i>
+                        <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
+                    </a>
+                </div><!-- /.buttons-box -->
+            </div><!-- /.portlet-heading -->
+            <div class="portlet-body">
+                <form method="post" asp-page-handler="Enrollment">
+                    <div class="row col col-lg-8">
+                        <div class="portlet-body">
+                            <div align="right" class="form-group">
+                                <label>انتخاب دستگاه</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="icon-printer"></i>
+                                    </span>
+                                    <select name="deviceId"  class="form-control" asp-for="DeviceId" asp-items="Model.DeviceList"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row col col-lg-8">
+                        <div class="portlet-body">
+                            <div align="right" class="form-group">
+                                <label>انتخاب کاربر</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="icon-user"></i>
+                                    </span>
+                                    <select name="userId" class="form-control" asp-for="UserId" asp-items="Model.UserList"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row col col-lg-8">
+                        <div class="portlet-body">
+                            <div align="right" class="form-group">
+                                <label>انتخاب نوع</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-universal-access"></i>
+                                    </span>
+                                    <select name="EnrollmentType" class="form-control" name="AccessType ">
+                                        <option value="card">کارت</option>
+                                        <option value="fp">اثرانگشت</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row col col-lg-8">
+                        <div class="portlet-body">
+                            <div align="right" class="form-group">
+                                <label>تعداد</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-universal-access"></i>
+                                    </span>
+                                    <select name="Count" class="form-control" name="AccessType ">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row col col-lg-8">
+                        <div style="float: left;">
+                            <button type="submit" class="btn btn-info curve">
+                                ارسال فرمان به دستگاه
+                                <div class="paper-ripple">
+                                    <div class="paper-ripple__background" style="opacity: 0.00616;"></div>
+                                    <div class="paper-ripple__waves"></div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div><!-- /.portlet-body -->
+        </div><!-- /.portlet -->
+    </div>
+</div><!-- /.portlet-body -->

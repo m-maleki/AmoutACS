@@ -4,107 +4,132 @@
     ViewBag.Title = "مدیریت دسترسی ها";
 }
 
-<br />
-<table class="table table-bordered table-striped table-hover">
-    <thead>
-        <tr>
-            <th>شناسه کاربری</th>
-            <th>نام</th>
-            <th>نام خانوادگی</th>
-            <th>اثر انگشت</th>
-            <th>چهره</th>
-            <th>وضعیت</th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="portlet-body">
+    <div class="col-lg-12">
+        <div class="portlet box border shadow">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h3 class="title">
+                        @ViewBag.Title
+                    </h3>
+                </div><!-- /.portlet-title -->
+                <div class="buttons-box">
+                    <a class="btn btn-sm btn-default btn-round btn-fullscreen" rel="tooltip" href="#">
+                        <i class="icon-size-fullscreen"></i>
+                        <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
+                    </a>
+                    <a class="btn btn-sm btn-default btn-round btn-close" rel="tooltip" href="#">
+                        <i class="icon-trash"></i>
+                        <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
+                    </a>
+                </div><!-- /.buttons-box -->
+            </div><!-- /.portlet-heading -->
+            <div class="portlet-body">
+                <br />
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>شناسه کاربری</th>
+                            <th>نام</th>
+                            <th>نام خانوادگی</th>
+                            <th>اثر انگشت</th>
+                            <th>چهره</th>
+                            <th>وضعیت</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-        <tr>
-            <td>@Model.User.Id</td>
-            <td>@Model.User.Name</td>
-            <td>@Model.User.FullName</td>
-            <td>@Model.User.enrolled_fingers</td>
-            <td>@Model.User.enrolled_faces</td>
-            @{
-                if (@Model.User.Active == 1)
-                {
-                    <td>
-                        <button type="submit" class="btn btn-success curve">فعال</button>
-                    </td>
-                }
-                else
-                {
-                    <td>
-                        <button type="submit" class="btn btn-danger curve">غیر فعال</button>
-                    </td>
-                }
-            }
-        </tr>
-    </tbody>
-</table>
-<hr />
+                        <tr>
+                            <td>@Model.User.Id</td>
+                            <td>@Model.User.Name</td>
+                            <td>@Model.User.FullName</td>
+                            <td>@Model.User.enrolled_fingers</td>
+                            <td>@Model.User.enrolled_faces</td>
+                            @{
+                                if (@Model.User.Active == 1)
+                                {
+                                    <td>
+                                        <button type="submit" class="btn btn-success curve">فعال</button>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        <button type="submit" class="btn btn-danger curve">غیر فعال</button>
+                                    </td>
+                                }
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+                <hr />
 
 
-<table class="table table-bordered table-striped table-hover">
-    <thead>
-        <tr>
-            <th>شناسه </th>
-            <th>نام</th>
-            <th>نوع </th>
-            <th>IP Address</th>
-            <th>Mac Address</th>
-            <th>وضعیت</th>
-            <th>دسترسی کاربر</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.UserDevices)
-        {
-            <tr>
-                <td>@item.DeviceId</td>
-                <td>@item.Name</td>
-                <td>@item.DeviceType</td>
-                <td>@item.Ip</td>
-                <td>@item.Mac</td>
-                @{
-                    if (@item.Status == "connected")
-                    {
-                        <td>
-                            <label class="label label-success curve">روشن</label>
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
-                            <label class="label label-danger curve">خاموش</label>
-                        </td>
-                    }
-                    if (@item.UserAccess == true)
-                    {
-                        <td>
-                            <form method="post" asp-page-handler="Revoke">
-                                <input type="hidden" name="deviceId" value="@item.DeviceId">
-                                <input type="hidden" name="userId" value="@Model.User.Id">
-                                <button id="btn-success" type="submit" class="btn btn-lg btn-success curve">دارای دسترسی</button>
-                            </form>
-                        </td>
-                    }
-                    if (@item.UserAccess == false)
-                    {
-                        <td>
-                            <form method="post" asp-page-handler="Assign">
-                                <input type="hidden" name="deviceId" value="@item.DeviceId">
-                                <input type="hidden" name="userId" value="@Model.User.Id">
-                                <button id="btn-success" type="submit" class="btn btn-lg btn-warning curve">بدون دسترسی</button>
-                            </form>
-                        </td>
-                    }
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>شناسه </th>
+                            <th>نام</th>
+                            <th>نوع </th>
+                            <th>IP Address</th>
+                            <th>Mac Address</th>
+                            <th>وضعیت</th>
+                            <th>دسترسی کاربر</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.UserDevices)
+                        {
+                            <tr>
+                                <td>@item.DeviceId</td>
+                                <td>@item.Name</td>
+                                <td>@item.DeviceType</td>
+                                <td>@item.Ip</td>
+                                <td>@item.Mac</td>
+                                @{
+                                    if (@item.Status == "connected")
+                                    {
+                                        <td>
+                                            <label class="label label-success curve">روشن</label>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <label class="label label-danger curve">خاموش</label>
+                                        </td>
+                                    }
+                                    if (@item.UserAccess == true)
+                                    {
+                                        <td>
+                                            <form method="post" asp-page-handler="Revoke">
+                                                <input type="hidden" name="deviceId" value="@item.DeviceId">
+                                                <input type="hidden" name="userId" value="@Model.User.Id">
+                                                <button id="btn-success" type="submit" class="btn btn-lg btn-success curve">دارای دسترسی</button>
+                                            </form>
+                                        </td>
+                                    }
+                                    if (@item.UserAccess == false)
+                                    {
+                                        <td>
+                                            <form method="post" asp-page-handler="Assign">
+                                                <input type="hidden" name="deviceId" value="@item.DeviceId">
+                                                <input type="hidden" name="userId" value="@Model.User.Id">
+                                                <button id="btn-success" type="submit" class="btn btn-lg btn-warning curve">بدون دسترسی</button>
+                                            </form>
+                                        </td>
+                                    }
 
-                }
+                                }
 
-            </tr>
-        }
-    </tbody>
-</table>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.portlet-body -->
+        </div><!-- /.portlet -->
+    </div>
+</div><!-- /.portlet-body -->
 
 @{
     if (Model.ShowMessage == true)

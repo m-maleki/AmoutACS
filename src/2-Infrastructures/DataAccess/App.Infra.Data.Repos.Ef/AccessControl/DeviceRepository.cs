@@ -2,6 +2,7 @@
 using App.Domain.Core.Cosec.Data.Repositories;
 using App.Domain.Core.CosecApi.Dtos;
 using App.Infra.Data.Db.SqlServer.Ef.DbContexts;
+using App.Infra.Data.Db.SqlServer.Ef.Entities.App;
 using Microsoft.EntityFrameworkCore;
 
 namespace App.Infra.Data.Repos.Ef.AccessControl;
@@ -62,7 +63,7 @@ public class DeviceRepository : IDeviceRepository
 
         return result.DeviceType;
     }
-
+    
     #endregion
 
 

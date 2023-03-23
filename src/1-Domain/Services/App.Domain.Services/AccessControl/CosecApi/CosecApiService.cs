@@ -26,7 +26,8 @@ public class CosecApiService : ICosecApiService
         var httpResult = await _clientFactory
             .CreateClient("CosecAPI").PostAsync(url, httpContent, cancellationToken);
 
-        return await httpResult.Content.ReadAsStringAsync(cancellationToken);
+        var result = await httpResult.Content.ReadAsStringAsync(cancellationToken);
+        return result;
     }
 
     #endregion

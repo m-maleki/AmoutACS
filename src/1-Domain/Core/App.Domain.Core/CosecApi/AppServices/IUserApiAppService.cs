@@ -1,5 +1,6 @@
 ﻿using App.Domain.Core.AccessControl.CosecApi.Dtos;
 using App.Domain.Core.Cosec.Dtos;
+using App.Domain.Core.CosecApi.Dtos;
 using Framework.Core.Markers;
 
 namespace App.Domain.Core.CosecApi.AppServices;
@@ -12,4 +13,5 @@ public interface IUserApiAppService : IScopedDependency
     Task Create(CreateUserDto model, CancellationToken cancellationToken);
     Task<UserChildDto> GetById(int userId, CancellationToken cancellationToken);
     Task DeleteUser(int userId, CancellationToken cancellationToken);
+    Task EnrollmentUser(EnrollmentUserDto model, CancellationToken cancellationToken);
 }

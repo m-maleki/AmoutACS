@@ -1,8 +1,11 @@
 ﻿@page
+@using Framework.Core.Utilities
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model IndexModel
 @{
     ViewData["Title"] = "داشبرد اکسس کنترل";
 }
+
 
 
 <div class="portlet-body">
@@ -83,8 +86,6 @@
         </div><!-- /.portlet -->
     </div>
 </div><!-- /.portlet-body -->
-
-
 <div class="portlet-body">
     <div class="col-lg-12">
         <div class="portlet box border shadow">
@@ -92,7 +93,7 @@
                 <div class="portlet-title">
                     <h3 class="title">
                         <i class="icon-graph"></i>
-                        گزارش ترددها
+                        ترددهای 10 روز اخیر
                     </h3>
                 </div><!-- /.portlet-title -->
                 <div class="buttons-box">
@@ -114,30 +115,149 @@
     </div>
 </div><!-- /.portlet-body -->
 
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-6 col-xs-12">
+            <div class="portlet box border shadow">
+                <div class="portlet-heading">
+                    <div class="portlet-title">
+                        <h3 class="title">
+                            <i class="fa fa-user"></i>
+                            آخرین کاربرها
+                        </h3>
+                    </div><!-- /.portlet-title -->
+                    <div class="buttons-box">
+                        <a class="btn btn-sm btn-default btn-round btn-fullscreen" rel="tooltip" href="#">
+                            <i class="icon-size-fullscreen"></i>
+                            <div class="paper-ripple">
+                                <div class="paper-ripple__background"></div>
+                                <div class="paper-ripple__waves"></div>
+                            </div>
+                        </a>
+
+                    </div><!-- /.buttons-box -->
+                </div><!-- /.portlet-heading -->
+                <div class="portlet-body">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>شناسه کاربری</th>
+                                <th>نام کامل</th>
+                                <th>اثر انگشت</th>
+                                <th>چهره</th>
+                                <th>وضعیت</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.users)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.FullName</td>
+                                    <td>@item.enrolled_fingers</td>
+                                    <td>@item.enrolled_faces</td>
+                                    @{
+                                        if (@item.Active == 1)
+                                        {
+                                            <td>
+                                                <span class="btn btn-lg btn-success curve"><i class="fa fa-toggle-on"></i>  فعال</span>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <span type="submit" class="btn btn-lg btn-warning curve"><i class="fa fa-toggle-off"></i>  غیر فعال</span>
+                                            </td>
+                                        }
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div><!-- /.portlet-body -->
+            </div><!-- /.portlet -->
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <div class="portlet box border shadow">
+                <div class="portlet-heading">
+                    <div class="portlet-title">
+                        <h3 class="title">
+                            <i class="fa fa-lock"></i>
+                            آخرین ترددها
+                        </h3>
+                    </div><!-- /.portlet-title -->
+                    <div class="buttons-box">
+                        <a class="btn btn-sm btn-default btn-round btn-fullscreen" rel="tooltip" href="#">
+                            <i class="icon-size-fullscreen"></i>
+                            <div class="paper-ripple">
+                                <div class="paper-ripple__background"></div>
+                                <div class="paper-ripple__waves"></div>
+                            </div>
+                        </a>
+
+                    </div><!-- /.buttons-box -->
+                </div><!-- /.portlet-heading -->
+                <div class="portlet-body">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>شناسه</th>
+                                <th>نام کاربر</th>
+                                <th>نام درب</th>
+                                <th>تاریخ</th>
+                                <th>روز هفته</th>
+                                <th>ساعت</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Events != null)
+                            {@foreach (var item in Model.Events)
+                                {
+                                    <tr>
+                                        <td>@item.IndexNo</td>
+                                        <td>@item.Username</td>
+                                        <td>@item.DeviceName</td>
+                                        <td>@item.EventDateTime.ToPersianString()</td>
+                                        <td>@item.EventDateTime.ToPersianString("dddd")</td>
+                                        <td>@item.EventDateTime.ToString("HH:mm:ss")</td>
+                                    </tr>
+                                }}
+
+                        </tbody>
+                    </table>
+
+                </div><!-- /.portlet-body -->
+
+            </div><!-- /.portlet-body -->
+        </div><!-- /.portlet -->
+    </div>
+</div><!-- /.portlet-body -->
 @section masterjs
-{
+    {
     <script>
         Chart.defaults.global.defaultFontFamily = "IranSans";
-        var randomScalingFactor = function() {
-            return Math.round(Math.floor(Math.random() * 6000)*1000)+15000000;
+        var randomScalingFactor = function () {
+            return Math.round(Math.floor(Math.random() * 6000) * 1000) + 15000000;
         };
+
         var config2 = {
             type: "line",
             data: {
-                labels: ["فروردین", "اردی بهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"],
+                labels: [@Html.Raw(@Model.DailyReport.Item1)],
                 datasets: [{
                     backgroundColor: "rgba(20,185,214,0.7)",
                     borderColor: "rgb(20,185,214)",
                     borderWidth: 2,
-                    label: "ترددهای ماهانه", 
-                    data: [100, 200,100, 85, 200, 380, 200, 105, 700 ,230,450,600]
+                    label: "تعداد تردد ها",
+                    data: [@Html.Raw(@Model.DailyReport.Item2)]
                 }]
             },
             options: {
                 maintainAspectRatio: false,
                 responsive: true,
-                title:{
-                    display:true
+                title: {
+                    display: true
                 },
                 hover: {
                     mode: "nearest",
@@ -148,7 +268,7 @@
                         display: true,
                         scaleLabel: {
                             display: true,
-                            labelString: "ماه"
+                            labelString: "روز"
                         }
                     }],
                     yAxes: [{
@@ -164,7 +284,7 @@
                 }
             }
         };
-        window.onload = function() {
+        window.onload = function () {
             var ctx = document.getElementById("line").getContext("2d");
             window.line1 = new Chart(ctx, config2);
         };

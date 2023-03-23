@@ -1,4 +1,6 @@
 ﻿using App.Domain.Core.Cosec.Data.Repositories;
+using App.Domain.Core.Cosec.Dtos;
+using App.Domain.Core.CosecApi.Dtos;
 using App.Infra.Data.Db.SqlServer.Ef.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,10 +30,57 @@ public class EventRepository : IEventRepository
         DateTime endDateTime = DateTime.Today.AddDays(1).AddTicks(-1); //Today at 23:59:59
 
         return await _appDbContext.Events
-                    .Where(x=>x.EventDateTime >= startDateTime && x.EventDateTime <= endDateTime)
+                    .Where(x => x.EventDateTime >= startDateTime && x.EventDateTime <= endDateTime)
                     .CountAsync(cancellationToken);
     }
-        
+
+    public async Task<List<EventOutputDto>> GetAll(DateTime fromDate, DateTime toDate, CancellationToken cancellationToken)
+    {
+        var result = await _appDbContext.Events.AsNoTracking()
+            .Where(x => x.EventDateTime >= fromDate && x.EventDateTime <= toDate)
+            .Include(x=>x.Device)
+            .Select(x => new EventOutputDto
+            {
+                DoorControllerId = x.DoorControllerId,
+                EntryExitType = x.EntryExitType,
+                EventDateTime = x.EventDateTime,
+                IDateTime = x.IDateTime,
+                Id = x.Id,
+                UserId = x.UserId,
+                IndexNo = x.IndexNo,
+                Leavedt = x.Leavedt,
+                MasterControllerId = x.MasterControllerId,
+                SpecialFunctionId = x.SpecialFunctionId,
+                Username = x.Username,
+                DeviceName = x.Device.Name
+            })
+            .OrderByDescending(x => x.EventDateTime)
+            .ToListAsync(cancellationToken);
+
+        return result;
+    }
+
+    public async Task<DailyReportDto> GetDailyEvent(CancellationToken cancellationToken)
+    {
+        var result =  _appDbContext.Events
+            .OrderByDescending(x=>x.EventDateTime)
+            .GroupBy(p => p.EventDateTime.Date)
+            .Select(g => new { date = g.Key, count = g.Count() });
+
+        var report = new DailyReportDto
+        {
+            Events = new List<int>(),
+            Days = new List<DateTime>()
+        };
+
+        foreach (var group in result)
+        {
+            report.Days.Add(group.date.Date);
+            report.Events.Add(group.count);
+        }
+
+        return report;
+    }
 
     #endregion
 }

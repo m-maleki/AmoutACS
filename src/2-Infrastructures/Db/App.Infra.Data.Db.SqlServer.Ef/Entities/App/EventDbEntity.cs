@@ -15,7 +15,9 @@ public class EventDbEntity
     public int DoorControllerId { get; set; }
     public int SpecialFunctionId { get; set; }
     public DateTime? Leavedt { get; set; }
-    public DateTime IDateTime { get; set; }
+    public DateTime? IDateTime { get; set; }
+    public DeviceDbEntity Device { get; set; }
+
 }
 
 public class EventDbEntityConfig : IEntityTypeConfiguration<EventDbEntity>
@@ -25,5 +27,6 @@ public class EventDbEntityConfig : IEntityTypeConfiguration<EventDbEntity>
         builder.ToTable("Events", "dbo");
         builder.HasKey(i => i.Id);
         builder.Property(i => i.Id).ValueGeneratedOnAdd();
+        builder.HasOne(x => x.Device).WithMany(x => x.Events).HasForeignKey(x=>x.DoorControllerId);
     }
 }

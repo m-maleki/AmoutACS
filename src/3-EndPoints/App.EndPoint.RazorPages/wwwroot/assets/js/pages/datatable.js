@@ -1,4 +1,5 @@
 
 tableMain = $('#data-table').DataTable({
-    "pageLength": 10
+    "pageLength": 10,
+    "ordering": false
 });

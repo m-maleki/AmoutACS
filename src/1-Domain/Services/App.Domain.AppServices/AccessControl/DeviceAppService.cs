@@ -53,6 +53,11 @@ public class DeviceAppService : IDeviceAppService
         return devices;
     }
 
+    public async Task<List<DeviceOutputDto>> GetAll(CancellationToken cancellationToken)
+        => await _deviceService.GetAll(cancellationToken);
+
+    public async Task<int> GetDeviceTypeWithDeviceId(int deviceId, CancellationToken cancellationToken)
+        => await _deviceService.GetDeviceTypeWithDeviceId(deviceId, cancellationToken);
 
     #endregion
 }

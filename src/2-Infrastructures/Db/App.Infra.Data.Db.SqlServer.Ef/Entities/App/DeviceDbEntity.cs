@@ -15,6 +15,7 @@ public class DeviceDbEntity
     public string Status { get; set; }
     public DateTime? ConnectTime { get; set; }
     public DateTime? DisconnectTime { get; set; }
+    public List<EventDbEntity> Events { get; set; }
 }
 
 public class DeviceDbEntityConfig : IEntityTypeConfiguration<DeviceDbEntity>

@@ -1,122 +1,142 @@
 ﻿@page
 @model App.EndPoint.RazorPages.Pages.Users.IndexModel
 @{
-    ViewBag.Title = "مدیریت کاربران"; 
+    ViewBag.Title = "مدیریت کاربران";
 }
 
 <div class="portlet-body">
-    <a class="btn btn-success curve " style="float:right" data-bs-toggle="modal" data-bs-target="#createBrand">تعریف کاربر جدید</a>
-    <br />
-    <br />
-    <table class="table table-bordered table-striped table-hover" id="data-table">
-        <thead>
-            <tr>
-                <th>شناسه کاربری</th>
-                <th>نام کامل</th>
-                <th>اثر انگشت</th>
-                <th>چهره</th>
-                <th>وضعیت</th>
-                <th>عملیات</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.users)
-            {
-                <tr>
-                    <td>@item.Id</td>
-                    <td>@item.FullName</td>
-                    <td>@item.enrolled_fingers</td>
-                    <td>@item.enrolled_faces</td>
-                    @{
-                        if (@item.Active == 1)
+    <div class="col-lg-12">
+        <div class="portlet box border shadow">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h3 class="title">
+                        مدیریت کاربران
+                    </h3>
+                </div><!-- /.portlet-title -->
+                <div class="buttons-box">
+                    <a class="btn btn-sm btn-default btn-round btn-fullscreen" rel="tooltip" href="#">
+                        <i class="icon-size-fullscreen"></i>
+                        <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
+                    </a>
+                    <a class="btn btn-sm btn-default btn-round btn-close" rel="tooltip" href="#">
+                        <i class="icon-trash"></i>
+                        <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
+                    </a>
+                </div><!-- /.buttons-box -->
+            </div><!-- /.portlet-heading -->
+            <div class="portlet-body">
+                <a class="btn btn-success curve " style="float:right" data-bs-toggle="modal" data-bs-target="#createBrand"> <i class="fa fa-user-plus"></i>  تعریف کاربر جدید</a>
+                <br />
+                <br />
+                <table class="table table-bordered table-striped table-hover" id="data-table">
+                    <thead>
+                        <tr>
+                            <th>شناسه کاربری</th>
+                            <th>نام کامل</th>
+                            <th>اثر انگشت</th>
+                            <th>چهره</th>
+                            <th>وضعیت</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.users)
                         {
-                            <td>
-                                <form method="post" asp-page-handler="DeActive">
-                                    <input type="hidden" name="id" value="@item.Id">
-                                    <button type="submit" class="btn btn-lg btn-success curve">فعال</button>
-                                </form>
-                            </td>
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.FullName</td>
+                                <td>@item.enrolled_fingers</td>
+                                <td>@item.enrolled_faces</td>
+                                @{
+                                    if (@item.Active == 1)
+                                    {
+                                        <td>
+                                            <form method="post" asp-page-handler="DeActive">
+                                                <input type="hidden" name="id" value="@item.Id">
+                                                <button type="submit" class="btn btn-lg btn-success curve"><i class="fa fa-toggle-on"></i>  فعال</button>
+                                            </form>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <form method="post" asp-page-handler="Active">
+                                                <input type="hidden" name="id" value="@item.Id">
+                                                <button type="submit" class="btn btn-lg btn-warning curve"><i class="fa fa-toggle-off"></i>  غیر فعال</button>
+                                            </form>
+                                        </td>
+                                    }
+                                }
+                                <td>
+                                    <div class="portlet-body">
+                                        @if (@item.Active == 1)
+                                        {
+                                            <a asp-page="/Access/Index" asp-route-id="@item.Id" class="btn btn-primary curve"><i class="fa fa-key"></i> نمایش دسترسی ها</a>
+                                        }
+                                        <a asp-page-handler="Delete" asp-route-id="@item.Id" onclick="return confirm('آیا از حذف کاربر اطمینان دارید ؟?');" class="btn btn-danger curve" data-toggle="tooltip" data-placement="top" title="حذف کاربر"><i class="fa fa-remove"></i> حذف</a>
+                                    </div>
+                                </td>
+                            </tr>
                         }
-                        else
-                        {
-                            <td>
-                                <form method="post" asp-page-handler="Active">
-                                    <input type="hidden" name="id" value="@item.Id">
-                                    <button type="submit" class="btn btn-lg btn-warning curve">غیر فعال</button>
+                    </tbody>
+                </table>
+
+                <div class="modal fade" id="createBrand" tabindex="-1" role="dialog" aria-labelledby="createBrandLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="createBrandLabel">ثبت کاربر جدید</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" asp-page-handler="Create">
+
+                                    <div class="form-group">
+                                        <label for="id">شناسه کاربر</label>
+                                        <input type="text" class="form-control" id="id" name="id" placeholder="شناسه کاربر را وارد کنید" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="name">نام</label>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="نام را وارد کنید" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="name">نام خانوادگی</label>
+                                        <input type="text" class="form-control" id="family" name="family" placeholder="نام خانوادگی را وارد کنید" required>
+                                    </div>
+
+                                    <div style="float: left;">
+                                        <button type="submit" class="btn btn-info curve">
+                                            ذخیره
+                                            <div class="paper-ripple">
+                                                <div class="paper-ripple__background" style="opacity: 0.00616;"></div>
+                                                <div class="paper-ripple__waves"></div>
+                                            </div>
+                                        </button>
+                                        <button type="submit" class="btn btn-danger curve" data-bs-dismiss="modal">
+                                            بازگشت
+                                            <div class="paper-ripple">
+                                                <div class="paper-ripple__background"></div>
+                                                <div class="paper-ripple__waves"></div>
+                                            </div>
+                                        </button>
+                                    </div>
+
                                 </form>
-                            </td>
-                        }
-                    }
-                    <td>
-                        <div class="portlet-body">
-                            @if (@item.Active == 1)
-                            {
-                                <a asp-page="/Access/Index" asp-route-id="@item.Id" class="btn btn-primary curve">نمایش دسترسی ها</a>
-                            }
-                            <a asp-page-handler="Delete" asp-route-id="@item.Id" onclick="return confirm('آیا از حذف کاربر اطمینان دارید ؟?');" class="btn btn-danger curve">حذف کاربر</a>
+                            </div>
                         </div>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    <div class="modal fade" id="createBrand" tabindex="-1" role="dialog" aria-labelledby="createBrandLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="createBrandLabel">ثبت کاربر جدید</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <form method="post" asp-page-handler="Create">
 
-                        <div class="form-group">
-                            <label for="id">شناسه کاربر</label>
-                            <input type="text" class="form-control" id="id" name="id" placeholder="شناسه کاربر را وارد کنید" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="name">نام</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="نام را وارد کنید" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="name">نام خانوادگی</label>
-                            <input type="text" class="form-control" id="family" name="family" placeholder="نام خانوادگی را وارد کنید" required>
-                        </div>
-
-                        <div style="float: left;">
-                            <button type="submit" class="btn btn-info curve">
-                                ذخیره
-                                <div class="paper-ripple">
-                                    <div class="paper-ripple__background" style="opacity: 0.00616;"></div>
-                                    <div class="paper-ripple__waves"></div>
-                                </div>
-                            </button>
-                            <button type="submit" class="btn btn-danger curve" data-bs-dismiss="modal">
-                                بازگشت
-                                <div class="paper-ripple">
-                                    <div class="paper-ripple__background"></div>
-                                    <div class="paper-ripple__waves"></div>
-                                </div>
-                            </button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
+            </div><!-- /.portlet-body -->
+        </div><!-- /.portlet -->
     </div>
-
 </div><!-- /.portlet-body -->
-
-
-
 @section masterjs
-{
+    {
 
     @{
         if (Model.ShowMessage == true)

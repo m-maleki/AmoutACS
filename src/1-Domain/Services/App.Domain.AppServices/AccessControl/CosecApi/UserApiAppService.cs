@@ -11,6 +11,7 @@ using App.Domain.Core.CosecApi.Services;
 using App.Domain.Core.AccessControl.CosecApi.Dtos;
 using Newtonsoft.Json;
 using System.Threading;
+using App.Domain.Core.CosecApi.Dtos;
 
 namespace App.Domain.AppServices.AccessControl.CosecApi;
 public class UserApiAppService : IUserApiAppService
@@ -112,6 +113,14 @@ public class UserApiAppService : IUserApiAppService
         await _cosecApiService.CallApi(url, cancellationToken);
 
         await _userService.Delete(userId, cancellationToken);
+    }
+
+    public async Task EnrollmentUser(EnrollmentUserDto model, CancellationToken cancellationToken)
+    {
+        var url = $"user?action=enroll;id={model.UserId};device-type={model.DeviceTypeId};" +
+                  $"device-id={model.DeviceId};enroll-type={model.EnrollmentType};enroll-count={model.EnrollmentCount};";
+
+        await _cosecApiService.CallApi(url, cancellationToken);
     }
 
     #endregion

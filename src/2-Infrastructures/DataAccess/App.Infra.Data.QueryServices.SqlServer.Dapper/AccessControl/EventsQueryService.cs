@@ -33,16 +33,26 @@ public class EventsQueryService: IEventsQueryServices
         table.Columns.Add("IndexNo", typeof(int));
         table.Columns.Add("UserId", typeof(int));
         table.Columns.Add("Username", typeof(string));
+        table.Columns.Add("IDateTime", typeof(DateTime));
         table.Columns.Add("EventDateTime", typeof(DateTime));
         table.Columns.Add("EntryExitType", typeof(string));
         table.Columns.Add("MasterControllerId", typeof(int));
         table.Columns.Add("DoorControllerId", typeof(int));
         table.Columns.Add("SpecialFunctionId", typeof(int));
-        table.Columns.Add("Leavedt", typeof(string));
+        table.Columns.Add("Leavedt", typeof(DateTime));
         table.Columns.Add("CreateAt", typeof(DateTime));
 
+        foreach (var item in model.Events)
+        {
+            if (string.IsNullOrEmpty(item.leavedt))
+                item.leavedt = null;
+
+            if (string.IsNullOrEmpty(item.idatetime))
+                item.idatetime = null;
+        }
+
         model.Events.ForEach(x =>
-            table.Rows.Add(null, x.indexno, x.userid, x.username, x.eventdatetime.ToCorrectDateTimeString(),
+            table.Rows.Add(null, x.indexno, x.userid, x.username,x.idatetime, x.eventdatetime.ToCorrectDateTimeString(),
                 x.entryexittype, x.mastercontrollerid, x.doorcontrollerid, x.specialfunctionid,
                 x.leavedt, x.idatetime));
 

@@ -1,0 +1,192 @@
+﻿@page
+@using App.Domain.Core.Cosec.Enums
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model App.EndPoint.RazorPages.Pages.Devices.IndexModel
+@{
+    ViewBag.Title = "مدیریت دستگاه ها";
+}
+
+<div class="portlet-body">
+    <div class="col-lg-12">
+        <div class="portlet box border shadow">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h3 class="title">
+                        @ViewBag.Title
+                    </h3>
+                </div><!-- /.portlet-title -->
+                <div class="buttons-box">
+                    <a class="btn btn-sm btn-default btn-round btn-fullscreen" rel="tooltip" href="#">
+                        <i class="icon-size-fullscreen"></i>
+                        <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
+                    </a>
+                    <a class="btn btn-sm btn-default btn-round btn-close" rel="tooltip" href="#">
+                        <i class="icon-trash"></i>
+                        <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
+                    </a>
+                </div><!-- /.buttons-box -->
+            </div><!-- /.portlet-heading -->
+            <div class="portlet-body">
+                <a class="btn btn-success curve " style="float:right" data-bs-toggle="modal" data-bs-target="#createBrand">تعریف دستگاه جدید</a>
+
+                <br />
+                <hr>
+                <table class="table table-bordered table-striped table-hover" id="data-table">
+                    <thead>
+                        <tr>
+                            <th>شناسه </th>
+                            <th>نام</th>
+                            <th>نوع </th>
+                            <th>IP Address</th>
+                            <th>Mac Address</th>
+                            <th>وضعیت</th>
+                            <th>عملیات</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Devices)
+                        {
+                            <tr>
+                                <td>@item.DeviceId</td>
+                                <td>@item.Name</td>
+                                <td>@((DeviceType)@item.DeviceType)</td>
+                                <td>@item.Ip</td>
+                                <td>@item.Mac</td>
+                                @{
+                                    if (@item.Status == "connected")
+                                    {
+                                        <td>
+                                            <label class="label label-success curve">روشن</label>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <label class="label label-danger curve">خاموش</label>
+                                        </td>
+                                    }
+                                }
+                                <td>
+                                    @{
+                                        if (@item.Status == "connected")
+                                        {
+                                            <div class="portlet-body">
+                                                <a asp-page-handler="OpenDoor" asp-route-deviceId="@item.DeviceId" asp-route-deviceTypeId="@item.DeviceType" class="btn btn-primary curve" data-toggle="tooltip" data-placement="top" title="باز کردن درب"><i class="fa fa-unlock-alt"></i></a>
+                                                <a asp-page-handler="LockDoor" asp-route-deviceId="@item.DeviceId" asp-route-deviceTypeId="@item.DeviceType" class="btn btn-primary curve" data-toggle="tooltip" data-placement="top" title="قفل کردن درب"><i class="fa fa-lock"></i></a>
+                                                <a asp-page-handler="UnLockDoor" asp-route-deviceId="@item.DeviceId" asp-route-deviceTypeId="@item.DeviceType" class="btn btn-primary curve" data-toggle="tooltip" data-placement="top" title="باز ماندن درب"><i class="fa fa-unlock"></i></a>
+                                                <a asp-page-handler="NormalizeDoor" asp-route-deviceId="@item.DeviceId" asp-route-deviceTypeId="@item.DeviceType" class="btn btn-primary curve" data-toggle="tooltip" data-placement="top" title="عادی کردن وضعیت درب"><i class="fa fa-building"></i></a>
+                                                <a asp-page-handler="Delete" onclick="return confirm('آیا از حذف دستگاه اطمینان دارید ؟?');" asp-route-deviceId="@item.DeviceId" asp-route-deviceTypeId="@item.DeviceType" class="btn btn-danger curve" data-toggle="tooltip" data-placement="top" title="حذف کردن"><i class="fa fa-remove"></i></a>
+                                                </div>
+                                        }
+                                        else
+                                        {
+                                            <label class="label label-warning curve">دستگاه خاموش می باشد</label>
+                                            <a asp-page-handler="Delete" onclick="return confirm('آیا از حذف دستگاه اطمینان دارید ؟?');" asp-route-deviceId="@item.DeviceId" asp-route-deviceTypeId="@item.DeviceType" class="btn btn-danger curve" data-toggle="tooltip" data-placement="top" title="حذف کردن"><i class="fa fa-remove"></i></a>
+                                        }
+                                    }
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.portlet-body -->
+        </div><!-- /.portlet -->
+    </div>
+</div><!-- /.portlet-body -->
+
+
+
+<div class="modal fade" id="createBrand" tabindex="-1" role="dialog" aria-labelledby="createBrandLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createBrandLabel">ثبت دستگاه جدید</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-page-handler="Create">
+                    <div class="form-group">
+                        <label for="id">شناسه</label>
+                        <input type="text" class="form-control" id="id" name="id" placeholder="شناسه دستگاه جدید را وارد کنید" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">نام دستگاه</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="نام دستگاه جدید را وارد کنید" required>
+                    </div>
+
+                    <label for="DeviceType">نوع دستگاه</label>
+                    <select name="DeviceType" required
+                            class="form-control"
+                            asp-items="Html.GetEnumSelectList<DeviceType>()">
+                        <option>نوع دستگاه را انتخاب کنید</option>
+                    </select>
+                    <br />
+                    <div class="form-group">
+                        <label for="mac">آدرس MAC</label>
+                        <input type="text" value="00-00-00-00-" class="form-control" id="mac" name="mac" placeholder="آدرس MAC را وارد کنید" required>
+                    </div>
+
+                    <div style="float:left;">
+                        <button type="submit" class="btn btn-info curve">ذخیره<div class="paper-ripple"><div class="paper-ripple__background" style="opacity: 0.00616;"></div><div class="paper-ripple__waves"></div></div></button>
+                        <button type="submit" class="btn btn-danger curve" data-bs-dismiss="modal">بازگشت<div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div></button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section masterjs
+{
+
+    
+    @{
+        if (Model.ShowMessage == true)
+        {
+
+            <script defer>
+                {
+                    swal(
+                        'عملیات با موفقیت انجام شد',
+                        '',
+                        'success');
+                };
+            </script>
+        }
+    }
+
+    <script>
+
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        $("#mac").on("keyup", function (event) {
+
+            var limitField = $(this).val().trim().length;
+            var limit = "17";
+
+            if (event.keyCode != 8) {
+                var mac_value = $(this).val().trim().concat(':');
+                switch (limitField) {
+                case 2:
+                case 5:
+                case 8:
+                case 11:
+                case 14:
+                    $("#mac").val(mac_value);
+                    break;
+                }
+            }
+
+            if (limitField > limit) {
+                $("#mac").val($(this).val().trim().substring(0, limit));
+            }
+        });
+    </script>
+}

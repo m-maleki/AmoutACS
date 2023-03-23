@@ -7,4 +7,3 @@ public interface IAvailabilityService : IScopedDependency
     Task<bool> AvailableCosecDatabase(CancellationToken cancellationToken);
     Task<bool> AvailableACSDB(CancellationToken cancellationToken);
 }
-
