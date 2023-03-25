@@ -29,12 +29,38 @@ public class EventAppService : IEventAppService
     public async Task<List<EventOutputDto>> GetAll(DateTime fromDate, DateTime toDate, CancellationToken cancellationToken)
         => await _eventService.GetAll(fromDate, toDate, cancellationToken);
 
+    public async Task<List<EventOutputDto>> Search(int userId, string fromDate, string toDate,
+        CancellationToken cancellationToken)
+    {
+        DateTime startDateTime;
+        var endDateTime = DateTime.Now;
+
+        if (userId == 0 & fromDate == null && toDate == null)
+        {
+            startDateTime = DateTime.Today; //Today at 00:00:00
+            endDateTime = DateTime.Today.AddDays(1).AddTicks(-1); //Today at 23:59:59
+            return await _eventService.GetAll(startDateTime, endDateTime, cancellationToken);
+        }
+
+        if (fromDate == null && toDate == null)
+        {
+            startDateTime = DateTime.Today.AddDays(-30); //Today at 00:00:00
+            endDateTime = DateTime.Today.AddDays(1).AddTicks(-1); //Today at 23:59:59
+            return await _eventService.Search(userId, startDateTime, endDateTime, cancellationToken);
+        }
+
+        startDateTime = CosecDate.DateFormat(fromDate);
+        endDateTime = CosecDate.DateFormat(toDate).AddDays(1).AddTicks(-1);
+
+        if (userId == 0)
+            return await _eventService.GetAll(startDateTime, endDateTime, cancellationToken);
+        else
+            return await _eventService.Search(userId, startDateTime, endDateTime, cancellationToken);
+    }
+
     public async Task<Tuple<string, string>> GetDailyEvent(CancellationToken cancellationToken)
     {
         var result = await _eventService.GetDailyEvent(cancellationToken);
-
-        result.Events = result.Events.Take(10).ToList();
-        result.Days = result.Days.Take(10).ToList();
 
         if (result.Events.Any())
         {

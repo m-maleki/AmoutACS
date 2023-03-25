@@ -14,7 +14,7 @@ namespace App.EndPoint.RazorPages.Pages.Access
         private readonly IDeviceAppService _deviceAppService;
         private readonly IUserApiAppService _userApiAppService;
 
-        public List<SelectListItem> UserList { get; set; } = new List<SelectListItem>();
+        public UserOutputDto User { get; set; } = new UserOutputDto();
         public List<SelectListItem> DeviceList { get; set; } = new List<SelectListItem>();
         public int DeviceId { get; set; }
         public int UserId { get; set; }
@@ -29,16 +29,11 @@ namespace App.EndPoint.RazorPages.Pages.Access
         }
 
 
-        public async Task OnGet()
+        public async Task OnGet(int userId)
         {
-            var users = await _userAppService.GetAll(default);
-            var devices = await _deviceAppService.GetAll(default);
+            User = await _userAppService.GetById(userId,default);
 
-            UserList = users.Select(x => new SelectListItem
-            {
-                Value = x.Id.ToString(),
-                Text = x.Name
-            }).ToList();
+            var devices = await _deviceAppService.GetAll(default);
 
             DeviceList = devices.Select(x => new SelectListItem
             {

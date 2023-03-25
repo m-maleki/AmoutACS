@@ -3,7 +3,6 @@ using App.Domain.Core.AccessControl.CosecApi.AppServices;
 using App.Domain.Core.AccessControl.CosecApi.Dtos;
 using App.Domain.Core.CosecApi.Dtos;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace App.EndPoint.RazorPages.Pages
@@ -51,11 +50,11 @@ namespace App.EndPoint.RazorPages.Pages
             users = await _userAppService.GetAll(default);
             users = users.Take(10).ToList();
 
-            DateTime from = DateTime.Today.AddDays(-3);
+            DateTime from = DateTime.Today.AddDays(-7);
             DateTime to = DateTime.Now;
 
             Events = await _eventAppService.GetAll(from, to, default);
-            Events = Events.OrderByDescending(x=>x.EventDateTime).Take(10).ToList();
+            Events = Events.OrderByDescending(x => x.EventDateTime).Take(10).ToList();
 
             DailyReport = await _eventAppService.GetDailyEvent(default);
         }

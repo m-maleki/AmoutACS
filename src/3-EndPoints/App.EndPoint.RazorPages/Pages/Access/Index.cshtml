@@ -49,13 +49,13 @@
                                 if (@Model.User.Active == 1)
                                 {
                                     <td>
-                                        <button type="submit" class="btn btn-success curve">فعال</button>
+                                        <label class="btn btn-lg btn-success curve" data-toggle="tooltip" data-placement="top" title="کاربر فعال می باشد"><i class="fa fa-toggle-on"></i> </label>
                                     </td>
                                 }
                                 else
                                 {
                                     <td>
-                                        <button type="submit" class="btn btn-danger curve">غیر فعال</button>
+                                        <label class="btn btn-lg btn-danger curve" data-toggle="tooltip" data-placement="top" title="کاربر غیرفعال می باشد"><i class="fa fa-toggle-off"></i> </label>
                                     </td>
                                 }
                             }
@@ -105,17 +105,18 @@
                                             <form method="post" asp-page-handler="Revoke">
                                                 <input type="hidden" name="deviceId" value="@item.DeviceId">
                                                 <input type="hidden" name="userId" value="@Model.User.Id">
-                                                <button id="btn-success" type="submit" class="btn btn-lg btn-success curve">دارای دسترسی</button>
+                                                <button id="btn-success" type="submit" class="btn btn-lg btn-success curve" data-toggle="tooltip" data-placement="top" title="دارای دسترسی"><i class="fa fa-toggle-on"></i></button>
                                             </form>
                                         </td>
                                     }
+
                                     if (@item.UserAccess == false)
                                     {
                                         <td>
                                             <form method="post" asp-page-handler="Assign">
                                                 <input type="hidden" name="deviceId" value="@item.DeviceId">
                                                 <input type="hidden" name="userId" value="@Model.User.Id">
-                                                <button id="btn-success" type="submit" class="btn btn-lg btn-warning curve">بدون دسترسی</button>
+                                                <button id="btn-success" type="submit" class="btn btn-lg btn-danger curve" data-toggle="tooltip" data-placement="top" title="بدون دسترسی"><i class="fa fa-toggle-off"></i></button>
                                             </form>
                                         </td>
                                     }
@@ -131,22 +132,32 @@
     </div>
 </div><!-- /.portlet-body -->
 
-@{
-    if (Model.ShowMessage == true)
+
+
+
+
+    @section masterjs
     {
-@section masterjs
-{
-    <script defer>
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
+
+    @{
+        if (Model.ShowMessage == true)
         {
-            swal(
-                'تغییر دسترسی با موفقیت انجام شد',
-                '',
-                'success');
-        };
-    </script>
-}
+            <script defer>
+                {
+                    swal(
+                        'تغییر دسترسی با موفقیت انجام شد',
+                        '',
+                        'success');
+                };
+            </script>
+        }
     }
-}
+    }
 
 
 

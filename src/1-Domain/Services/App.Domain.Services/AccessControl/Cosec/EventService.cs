@@ -31,6 +31,10 @@ public class EventService : IEventService
     public async Task<DailyReportDto> GetDailyEvent(CancellationToken cancellationToken)
         => await _eventRepository.GetDailyEvent(cancellationToken);
 
+    public async Task<List<EventOutputDto>> Search(int userId, DateTime fromDate, DateTime toDate,
+        CancellationToken cancellationToken)
+        => await _eventRepository.Search(userId, fromDate, toDate, cancellationToken);
+
     #endregion
 }
 

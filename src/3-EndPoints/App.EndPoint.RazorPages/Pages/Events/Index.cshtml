@@ -3,7 +3,6 @@
 @model App.EndPoint.RazorPages.Pages.Events.IndexModel
 @{
     ViewBag.Title = "مدیریت تردد ها";
-
 }
 
 <div class="portlet-body">
@@ -18,40 +17,104 @@
                 <div class="buttons-box">
                     <a class="btn btn-sm btn-default btn-round btn-fullscreen" rel="tooltip" href="#">
                         <i class="icon-size-fullscreen"></i>
-                        <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
+                        <div class="paper-ripple">
+                            <div class="paper-ripple__background"></div>
+                            <div class="paper-ripple__waves"></div></div>
                     </a>
                     <a class="btn btn-sm btn-default btn-round btn-close" rel="tooltip" href="#">
                         <i class="icon-trash"></i>
-                        <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
+                        <div class="paper-ripple">
+                            <div class="paper-ripple__background"></div>
+                            <div class="paper-ripple__waves"></div></div>
                     </a>
                 </div><!-- /.buttons-box -->
             </div><!-- /.portlet-heading -->
             <div class="portlet-body">
+                <form method="post" asp-page-handler="Search">
+                    <row class="row col col-lg-12">
+                        <div class="row col col-lg-3">
+                            <div class="portlet-body">
+                                <div class="form-group">
+                                    <label>از تاریخ</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="icon-calendar"></i>
+                                        </span>
+                                        <input type="text" name="fromDate" class="form-control" id="kama-datepicker-from" value="@Model.FromDate">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col col-lg-3">
+                            <div class="portlet-body">
+                                <div class="form-group">
+                                    <label>تا تاریخ</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="icon-calendar"></i>
+                                        </span>
+                                        <input type="text" name="toDate" class="form-control" id="kama-datepicker-to" value="@Model.ToDate">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row col col-lg-3">
+                            <div class="portlet-body">
+                                <div class="form-group">
+                                    <label></label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="icon-user"></i>
+                                        </span>
+                                        <select class="form-control " asp-for="userId" asp-items="Model.UserList">
+                                            <option>همه کاربران</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row col col-lg-3">
+                            <div class="portlet-body">
+                                <div class="form-group">
+                                    <label></label>
+                                    <div class="input-group">
+                                        <input type="submit" class="btn btn-primary" value="جستجو در لیست">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </row>
+                </form>
+                <hr/>
                 <table class="table table-bordered table-striped table-hover" id="data-table-events">
                     <thead>
-                        <tr>
-                            <th>شناسه</th>
-                            <th>نام کاربر</th>
-                            <th>نام درب</th>
-                            <th>تاریخ</th>
-                            <th>روز هفته</th>
-                            <th>ساعت</th>
+                    <tr>
+                        <th>شناسه</th>
+                        <th>نام کاربر</th>
+                        <th>نام درب</th>
+                        <th>تاریخ</th>
+                        <th>روز هفته</th>
+                        <th>ساعت</th>
 
-                        </tr>
+                    </tr>
                     </thead>
                     <tbody>
-                        @if (Model.Events != null)
-                            {@foreach (var item in Model.Events)
-                            {
-                                <tr>
-                                    <td>@item.IndexNo</td>
-                                    <td>@item.Username</td>
-                                    <td>@item.DeviceName</td>
-                                    <td>@item.EventDateTime.ToPersianString()</td>
-                                    <td>@item.EventDateTime.ToPersianString("dddd")</td>
-                                    <td>@item.EventDateTime.ToString("HH:mm:ss")</td>
-                                </tr>
-                            }}
+                    @if (Model.Events != null)
+                    {
+@foreach (var item in Model.Events)
+{
+    <tr>
+        <td>@item.IndexNo</td>
+        <td>@item.Username</td>
+        <td>@item.DeviceName</td>
+        <td>@item.EventDateTime.ToPersianString()</td>
+        <td>@item.EventDateTime.ToPersianString("dddd")</td>
+        <td>@item.EventDateTime.ToString("HH:mm:ss")</td>
+    </tr>
+}
+                    }
 
                     </tbody>
                 </table>

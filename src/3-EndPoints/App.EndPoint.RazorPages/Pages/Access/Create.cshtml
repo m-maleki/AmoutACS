@@ -21,8 +21,40 @@
                 </div><!-- /.buttons-box -->
             </div><!-- /.portlet-heading -->
             <div class="portlet-body">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>شناسه کاربری</th>
+                        <th>نام کامل</th>
+                        <th>وضعیت</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr>
+                        <td>@Model.User.Id</td>
+                        <td>@Model.User.FullName</td>
+                        @{
+                            if (@Model.User.Active == 1)
+                            {
+                                <td>
+                                        <label class="btn btn-lg btn-success curve" data-toggle="tooltip" data-placement="top" title="کاربر فعال می باشد"><i class="fa fa-toggle-on"></i> </label>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <label class="btn btn-lg btn-danger curve" data-toggle="tooltip" data-placement="top" title="کاربر غیر فعال می باشد"><i class="fa fa-toggle-off"></i> </label>
+                                </td>
+                            }
+                        }
+                    </tr>
+                    </tbody>
+                </table>
+
                 <form method="post" asp-page-handler="Enrollment">
-                    <div class="row col col-lg-8">
+                    <input type="hidden" name="userId" value="@Model.User.Id" />
+                    <div class="row col col-lg-12">
                         <div class="portlet-body">
                             <div align="right" class="form-group">
                                 <label>انتخاب دستگاه</label>
@@ -30,27 +62,14 @@
                                     <span class="input-group-addon">
                                         <i class="icon-printer"></i>
                                     </span>
-                                    <select name="deviceId"  class="form-control" asp-for="DeviceId" asp-items="Model.DeviceList"></select>
+                                    <select name="deviceId" class="form-control" asp-for="DeviceId" asp-items="Model.DeviceList"></select>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row col col-lg-8">
-                        <div class="portlet-body">
-                            <div align="right" class="form-group">
-                                <label>انتخاب کاربر</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="icon-user"></i>
-                                    </span>
-                                    <select name="userId" class="form-control" asp-for="UserId" asp-items="Model.UserList"></select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="row col col-lg-8">
+                    <div class="row col col-lg-12">
                         <div class="portlet-body">
                             <div align="right" class="form-group">
                                 <label>انتخاب نوع</label>
@@ -66,8 +85,8 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="row col col-lg-8">
+
+                    <div class="row col col-lg-12">
                         <div class="portlet-body">
                             <div align="right" class="form-group">
                                 <label>تعداد</label>
@@ -84,7 +103,7 @@
                         </div>
                     </div>
 
-                    <div class="row col col-lg-8">
+                    <div class="row col col-lg-12">
                         <div style="float: left;">
                             <button type="submit" class="btn btn-info curve">
                                 ارسال فرمان به دستگاه
@@ -100,3 +119,13 @@
         </div><!-- /.portlet -->
     </div>
 </div><!-- /.portlet-body -->
+
+@section masterjs
+{
+    <script>
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+
+}

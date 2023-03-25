@@ -8,5 +8,7 @@ public interface IEventService : IScopedDependency
     Task<int> GetTodayEventsCount(CancellationToken cancellationToken);
     Task<List<EventOutputDto>> GetAll(DateTime fromDate, DateTime toDate, CancellationToken cancellationToken);
     Task<DailyReportDto> GetDailyEvent(CancellationToken cancellationToken);
+    Task<List<EventOutputDto>> Search(int userId, DateTime fromDate, DateTime toDate,
+        CancellationToken cancellationToken);
 }
 

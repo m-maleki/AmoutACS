@@ -71,9 +71,11 @@
                                     <div class="portlet-body">
                                         @if (@item.Active == 1)
                                         {
-                                            <a asp-page="/Access/Index" asp-route-id="@item.Id" class="btn btn-primary curve"><i class="fa fa-key"></i> نمایش دسترسی ها</a>
+                                            <a asp-page="/Access/Index" asp-route-id="@item.Id" class="btn btn-primary curve" data-toggle="tooltip" data-placement="top" title="نمایش و تعریف دسترسی"><i class="fa fa-unlock-alt"></i></a>
+                                            <a asp-page="/Events/Index" asp-route-userId="@item.Id" class="btn btn-primary curve" data-toggle="tooltip" data-placement="top" title="تردد های 30 روز اخیر"><i class="fa fa-users"></i></a>
+                                            <a asp-page="/Access/Create" asp-route-userId="@item.Id" class="btn btn-success curve" data-toggle="tooltip" data-placement="top" title="تعریف کارت و اثرانگشت"><i class="fa fa-address-card"></i></a>
                                         }
-                                        <a asp-page-handler="Delete" asp-route-id="@item.Id" onclick="return confirm('آیا از حذف کاربر اطمینان دارید ؟?');" class="btn btn-danger curve" data-toggle="tooltip" data-placement="top" title="حذف کاربر"><i class="fa fa-remove"></i> حذف</a>
+                                        <a asp-page-handler="Delete" asp-route-id="@item.Id" onclick="return confirm('آیا از حذف کاربر اطمینان دارید ؟?');" class="btn btn-danger curve" data-toggle="tooltip" data-placement="top" title="حذف کاربر"><i class="fa fa-remove"></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -154,6 +156,10 @@
     }
 
     <script>
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
         $(document).ready(function () {
             $(".table a").on("click", function () {
                 var dataId = $(this).attr("data-id");

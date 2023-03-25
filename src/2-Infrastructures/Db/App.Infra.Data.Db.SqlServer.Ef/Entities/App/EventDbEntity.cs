@@ -27,6 +27,6 @@ public class EventDbEntityConfig : IEntityTypeConfiguration<EventDbEntity>
         builder.ToTable("Events", "dbo");
         builder.HasKey(i => i.Id);
         builder.Property(i => i.Id).ValueGeneratedOnAdd();
-        builder.HasOne(x => x.Device).WithMany(x => x.Events).HasForeignKey(x=>x.DoorControllerId);
+        builder.HasOne(x => x.Device).WithMany(x => x.Events).HasForeignKey(x=>x.MasterControllerId);
     }
 }

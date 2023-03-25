@@ -38,7 +38,33 @@ public class EventRepository : IEventRepository
     {
         var result = await _appDbContext.Events.AsNoTracking()
             .Where(x => x.EventDateTime >= fromDate && x.EventDateTime <= toDate)
-            .Include(x=>x.Device)
+            //.Include(x=>x.Device)
+            .Select(x => new EventOutputDto
+            {
+                DoorControllerId = x.DoorControllerId,
+                EntryExitType = x.EntryExitType,
+                EventDateTime = x.EventDateTime,
+                IDateTime = x.IDateTime,
+                Id = x.Id,
+                UserId = x.UserId,
+                IndexNo = x.IndexNo,
+                Leavedt = x.Leavedt,
+                MasterControllerId = x.MasterControllerId,
+                SpecialFunctionId = x.SpecialFunctionId,
+                Username = x.Username,
+                DeviceName = x.Device.Name
+            })
+            .OrderByDescending(x => x.EventDateTime)
+            .ToListAsync(cancellationToken);
+
+        return result;
+    }
+
+    public async Task<List<EventOutputDto>> Search(int userId, DateTime fromDate, DateTime toDate, CancellationToken cancellationToken)
+    {
+        var result = await _appDbContext.Events.AsNoTracking()
+            .Where(x => x.UserId == userId &&  x.EventDateTime >= fromDate && x.EventDateTime <= toDate)
+            .Include(x => x.Device)
             .Select(x => new EventOutputDto
             {
                 DoorControllerId = x.DoorControllerId,
@@ -62,8 +88,15 @@ public class EventRepository : IEventRepository
 
     public async Task<DailyReportDto> GetDailyEvent(CancellationToken cancellationToken)
     {
-        var result =  _appDbContext.Events
-            .OrderByDescending(x=>x.EventDateTime)
+        DateTime startDateTime = DateTime.Today.AddDays(-30); ; //Today at 00:00:00
+        DateTime endDateTime = DateTime.Today;
+
+        var result2 = await _appDbContext.Events
+            .Where(x => x.EventDateTime >= startDateTime && x.EventDateTime <= endDateTime)
+            .ToListAsync(cancellationToken);
+
+        var result = result2
+            //.OrderByDescending(x => x.EventDateTime)
             .GroupBy(p => p.EventDateTime.Date)
             .Select(g => new { date = g.Key, count = g.Count() });
 
