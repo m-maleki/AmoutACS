@@ -34,6 +34,7 @@
     <link href="~/assets/css/colors.css" rel="stylesheet">
     <link href="~/assets/css/Custom.css" rel="stylesheet">
     <link href="~/css/site.css" rel="stylesheet" />
+
     <!-- END CSS -->
 </head>
 
@@ -59,18 +60,7 @@
         <div id="page-content">
             <div class="row">
                 <!-- BEGIN BREADCRUMB -->
-                <div class="col-md-12">
-                    <div class="breadcrumb-box border shadow">
-                        <ul class="breadcrumb">
-                            @ViewData["Title"]
 
-                        </ul>
-                        <div class="breadcrumb-left">
-                            @DateTime.Now.ToPersianString("dddd, dd MMMM,yyyy").ToString()
-                            <i class="icon-calendar"></i>
-                        </div><!-- /.breadcrumb-left -->
-                    </div><!-- /.breadcrumb-box -->
-                </div><!-- /.col-md-12 -->
                 <!-- END BREADCRUMB -->
                 @RenderBody()
             </div><!-- /.row -->
@@ -80,7 +70,7 @@
     </div><!-- /#wrapper -->
     <!-- END WRAPPER -->
 
-    <div class="row footer-container">
+    <div style="position: fixed;" class="row footer-container fixed-bottom">
         <div class="col-md-12">
             <div class="copyright">
                 <p class="float-start">
@@ -93,19 +83,6 @@
             </div><!-- /.copyright -->
         </div><!-- /.col-md-12 -->
     </div><!-- /.row -->
-    <!-- BEGIN CODE MODAL -->
-    <div class="modal fade" id="code-modal" role="dialog" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn btn-default btn-round btn-icon float-start" id="btn-copy"><i class="fa fa-copy"></i></button>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">کپی کردن کدها</h4>
-                </div>
-                <div class="modal-body"></div>
-            </div> <!-- /.modal-content -->
-        </div> <!-- /.modal-dialog -->
-    </div> <!-- /.modal -->
     <!-- END CODE MODAL -->
     <!-- BEGIN JS -->
     <script src="~/assets/plugins/jquery/dist/jquery-3.1.0.js"></script>

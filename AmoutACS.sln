@@ -45,6 +45,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Core", "framework
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.EndPoint.RazorPages", "src\3-EndPoints\App.EndPoint.RazorPages\App.EndPoint.RazorPages.csproj", "{34C82811-9697-4951-920B-526C8B30A544}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.EndPoints.WebApi", "src\3-EndPoints\App.EndPoints.WebApi\App.EndPoints.WebApi.csproj", "{50999AA8-B7D3-409B-B578-67A2A93DF6F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,10 @@ Global
 		{34C82811-9697-4951-920B-526C8B30A544}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34C82811-9697-4951-920B-526C8B30A544}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34C82811-9697-4951-920B-526C8B30A544}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50999AA8-B7D3-409B-B578-67A2A93DF6F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50999AA8-B7D3-409B-B578-67A2A93DF6F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50999AA8-B7D3-409B-B578-67A2A93DF6F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50999AA8-B7D3-409B-B578-67A2A93DF6F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -115,6 +121,7 @@ Global
 		{EB5AF333-FD5D-4DAE-B78C-05EF4792D60D} = {AFBCED37-0B1D-4C94-BFB3-035DCEC588A1}
 		{615C0553-7582-4B90-81E8-44051AAAC817} = {6C44E5ED-A4AE-4E29-B2B4-16AD36368C5A}
 		{34C82811-9697-4951-920B-526C8B30A544} = {01CF09F6-E8C2-4016-A79C-C3E5837EECA2}
+		{50999AA8-B7D3-409B-B578-67A2A93DF6F7} = {01CF09F6-E8C2-4016-A79C-C3E5837EECA2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1E978455-A5B8-4964-980E-3A0BA9404F8D}

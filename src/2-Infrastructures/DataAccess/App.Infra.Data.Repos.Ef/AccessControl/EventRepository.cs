@@ -89,7 +89,7 @@ public class EventRepository : IEventRepository
     public async Task<DailyReportDto> GetDailyEvent(CancellationToken cancellationToken)
     {
         DateTime startDateTime = DateTime.Today.AddDays(-30); ; //Today at 00:00:00
-        DateTime endDateTime = DateTime.Today;
+        DateTime endDateTime = DateTime.Today.AddDays(1).AddTicks(-1);
 
         var result2 = await _appDbContext.Events
             .Where(x => x.EventDateTime >= startDateTime && x.EventDateTime <= endDateTime)

@@ -74,7 +74,15 @@ public class UserQueryServices : IUserQueryServices
         {
 
             bulkCopy.DestinationTableName = "[dbo].[Users]";
-            await bulkCopy.WriteToServerAsync(table, cancellationToken);
+            try
+            {
+                await bulkCopy.WriteToServerAsync(table, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
 
         }
         await connection.CloseAsync();

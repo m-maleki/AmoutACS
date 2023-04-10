@@ -45,7 +45,7 @@
                 </div><!-- /.col-lg-3 -->
                 <div class="col-lg-3 col-6">
                     <div class="stat-box bg-blue shadow">
-                        <a asp-page="./Device/Index">
+                        <a asp-page="./Devices/Index">
                             <div class="stat">
                                 <div class="counter-down">@Model.ActiveDeviceCount</div>
                                 <div class="h3">دستگاه های فعال</div>
@@ -58,7 +58,7 @@
                 </div><!-- /.col-lg-3 -->
                 <div class="col-lg-3 col-6">
                     <div class="stat-box bg-orange shadow">
-                        <a asp-page="./Event/Index">
+                        <a asp-page="./Events/Index">
                             <div class="stat">
                                 <div class="counter-down">@Model.EventCount</div>
                                 <div class="h3">تردد های امروز</div>
@@ -71,7 +71,7 @@
                 </div><!-- /.col-lg-3 -->
                 <div class="col-lg-3 col-6">
                     <div class="stat-box bg-red shadow">
-                        <a asp-page="./Device/Index">
+                        <a asp-page="./Devices/Index">
                             <div class="stat">
                                 <div class="counter-down">@Model.DeActiveDeviceCount</div>
                                 <div class="h3">دستگاه های غیرفعال</div>
@@ -141,7 +141,7 @@
                     <table class="table table-bordered table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>شناسه کاربری</th>
+                                <th>شناسه</th>
                                 <th>نام کامل</th>
                                 <th>اثر انگشت</th>
                                 <th>چهره</th>
@@ -152,10 +152,24 @@
                             @foreach (var item in Model.users)
                             {
                                 <tr>
-                                    <td>@item.Id</td>
+                                    <td style="width: 20px">@item.Id</td>
                                     <td>@item.FullName</td>
-                                    <td>@item.enrolled_fingers</td>
-                                    <td>@item.enrolled_faces</td>
+                                    <td>
+                                        @{
+                                            for (int i = 0; i < @item.enrolled_fingers; i++)
+                                            {
+                                                <i style="font-weight: bold; color:rgb(20,185,214)" class="fa fa-hand-o-up"></i>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            for (int i = 0; i < @item.enrolled_faces; i++)
+                                            {
+                                                <i style="font-weight: bold; color: rgb(20,185,214)" class="fa fa-user-circle"></i>
+                                            }
+                                        }
+                                    </td>
                                     @{
                                         if (@item.Active == 1)
                                         {

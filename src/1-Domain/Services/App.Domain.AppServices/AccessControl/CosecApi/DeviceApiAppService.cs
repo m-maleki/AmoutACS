@@ -25,7 +25,7 @@ public class DeviceApiAppService : IDeviceApiAppService
     {
         var url = $"device?action=set;name={model.DeviceName};device-id={model.DeviceId}" +
                   $";device-type={model.DeviceTypeId};mac={model.MacAddress};";
-        await _cosecApiService.CallApi(url, cancellationToken);
+      var tt=  await _cosecApiService.CallApi(url, cancellationToken);
     }
 
     public async Task Delete(DeleteDeviceDto model, CancellationToken cancellationToken)

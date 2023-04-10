@@ -65,75 +65,77 @@ public class SyncAppService : ISyncAppService
 
     public async Task SyncEvents(CancellationToken cancellationToken)
     {
-        ////var lastIndex = await _eventsProcessedService.GetLastIndex(cancellationToken);
+        var lastIndex = await _eventsProcessedService.GetLastIndex(cancellationToken);
 
-        ////var url = $"event-ta?action=get;format=json;index={lastIndex + 1}";
+        var url = $"event-ta?action=get;format=json;index={lastIndex + 1}";
 
-        ////var response = await _cosecApiService.CallApi(url, cancellationToken);
-    
-        ////if (!response.Contains("No records found"))
-        ////{
-        ////    var responseModel = JsonConvert.DeserializeObject<EventDto>(response);
+        var response = await _cosecApiService.CallApi(url, cancellationToken);
 
-        ////    if (responseModel.Events.Any())
-        ////    {
-        ////        await _eventsQueryService.BulkInsert(responseModel, cancellationToken);
+        if (!response.Contains("No records found"))
+        {
+            var responseModel = JsonConvert.DeserializeObject<EventDto>(response);
 
-        ////        var processedItems = new EventsProcessedDto
-        ////        {
-        ////            LastIndexNo = int.Parse(responseModel.Events.Last().indexno),
-        ////            ProcessedCount = responseModel.Events.Count
-        ////        };
+            if (responseModel.Events.Any())
+            {
+                await _eventsQueryService.BulkInsert(responseModel, cancellationToken);
 
-        ////        await _eventsProcessedService.Add(processedItems, cancellationToken);
-        ////    }
-        ////}
+                var processedItems = new EventsProcessedDto
+                {
+                    LastIndexNo = int.Parse(responseModel.Events.Last().indexno),
+                    ProcessedCount = responseModel.Events.Count
+                };
+
+                await _eventsProcessedService.Add(processedItems, cancellationToken);
+            }
+        }
 
     }
 
     public async Task SyncUsers(CancellationToken cancellationToken)
     {
-        //const string url = $"user?action=get;range=all;format=json";
+        const string url = $"user?action=get;range=all;format=json";
 
-        //var response = await _cosecApiService.CallApi(url, cancellationToken);
+        var response = await _cosecApiService.CallApi(url, cancellationToken);
 
-        //if (!response.Contains("No records found"))
-        //{
-        //    await _userService.DeleteAll(cancellationToken);
-        //    var usersInApi = JsonConvert.DeserializeObject<UserDto>(response).Users;
+        if (!response.Contains("No records found"))
+        {
+            await _userService.DeleteAll(cancellationToken);
+            Thread.Sleep(100);
+            var usersInApi = JsonConvert.DeserializeObject<UserDto>(response).Users;
 
-        //    if (usersInApi.Any())
-        //        await _userQueryServices.BulkInsert(usersInApi, cancellationToken);
-        //}
+            if (usersInApi.Any())
+                await _userQueryServices.BulkInsert(usersInApi, cancellationToken);
+        }
     }
 
     public async Task ReSyncUser(int userId,CancellationToken cancellationToken)
     {
-        //var url = $"user?action=get;id={userId};format=json";
+        var url = $"user?action=get;id={userId};format=json";
 
-        //var response = await _cosecApiService.CallApi(url, cancellationToken);
+        var response = await _cosecApiService.CallApi(url, cancellationToken);
 
-        //if (!response.Contains("does not exist"))
-        //{
-        //    var user = JsonConvert.DeserializeObject<UserDto>(response).Users.FirstOrDefault();
+        if (!response.Contains("does not exist"))
+        {
+            var user = JsonConvert.DeserializeObject<UserDto>(response).Users.FirstOrDefault();
 
-        //    if (user != null)
-        //        await _userService.Update(user, cancellationToken);
-        //}
+            if (user != null)
+                await _userService.Update(user, cancellationToken);
+        }
     }
 
     public async Task SyncDevices(CancellationToken cancellationToken)
     {
-        //const string url = $"device?action=list;format=json";
+        const string url = $"device?action=list;format=json";
 
-        //var response =  await _cosecApiService.CallApi(url, cancellationToken);
+        var response = await _cosecApiService.CallApi(url, cancellationToken);
 
-        //if (!response.Contains("No records found"))
-        //{
-        //    var devices = JsonConvert.DeserializeObject<DeviceDto>(response).Devices;
-        //    await _deviceService.DeleteAll(cancellationToken);
-        //    await _deviceQueryServices.BulkInsert(devices,cancellationToken);
-        //}
+        if (!response.Contains("No records found"))
+        {
+            var devices = JsonConvert.DeserializeObject<DeviceDto>(response).Devices;
+            await _deviceService.DeleteAll(cancellationToken);
+            Thread.Sleep(100);
+            await _deviceQueryServices.BulkInsert(devices, cancellationToken);
+        }
     }
 
     public async Task<UserChildDto?> GetUser(int userId, CancellationToken cancellationToken)

@@ -50,11 +50,11 @@ namespace App.EndPoint.RazorPages.Pages.Account
            var result =  await _signInManager.PasswordSignInAsync(email, password, true, false);
            if (result.Succeeded)
            {
-               await _syncAppService.SyncDevices(default);
-               await _syncAppService.SyncUsers(default);
-               await _syncAppService.SyncEvents(default);
-               
-               return RedirectToPage("/Index");
+                await _syncAppService.SyncDevices(default);
+                await _syncAppService.SyncUsers(default);
+                await _syncAppService.SyncEvents(default);
+
+                return RedirectToPage("/Index");
            }
            return RedirectToAction("Account/Login");
         }

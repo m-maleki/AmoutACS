@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\framework\New folder\Framework.Core\Framework.Core.csproj" />
+    <ProjectReference Include="..\..\1-Domain\Services\App.Domain.AppServices\App.Domain.AppServices.csproj" />
+    <ProjectReference Include="..\..\1-Domain\Services\App.Domain.Services\App.Domain.Services.csproj" />
+    <ProjectReference Include="..\..\2-Infrastructures\3rdParties\App.Infra.3rdParties.Scheduler.hangfire\App.Infra.3rdParties.Scheduler.hangfire.csproj" />
+    <ProjectReference Include="..\..\2-Infrastructures\DataAccess\App.Infra.Data.QueryServices.SqlServer.Dapper\App.Infra.Data.QueryServices.SqlServer.Dapper.csproj" />
+    <ProjectReference Include="..\..\2-Infrastructures\DataAccess\App.Infra.Data.Repos.Ef\App.Infra.Data.Repos.Ef.csproj" />
+    <ProjectReference Include="..\..\2-Infrastructures\Db\App.Infra.Data.Db.SqlServer.Ef\App.Infra.Data.Db.SqlServer.Ef.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>
