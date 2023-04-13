@@ -56,8 +56,8 @@ namespace App.EndPoint.RazorPages.Pages.Access
                 EnrollmentCount = count
             };
 
-            await _userApiAppService.EnrollmentUser(model, default);
-            return RedirectToAction("OnGet");
+          //  await _userApiAppService.EnrollmentUser(model, default);
+            return RedirectToAction("OnGet",new { userId = userId });
         }
     }
 }
