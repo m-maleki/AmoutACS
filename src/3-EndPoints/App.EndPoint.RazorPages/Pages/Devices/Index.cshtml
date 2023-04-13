@@ -31,66 +31,68 @@
 
                 <br />
                 <hr>
-                <table class="table table-responsive table-bordered table-striped table-hover" id="data-table">
-                    <thead>
-                    <tr>
-                        <th>شناسه </th>
-                        <th>نام</th>
-                        <th>نوع </th>
-                        <th>IP Address</th>
-                        <th>Mac Address</th>
-                        <th>وضعیت</th>
-                        <th>عملیات</th>
-
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var item in Model.Devices)
-                    {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover" id="data-table">
+                        <thead>
                         <tr>
-                            <td style="font-weight: bold;">@item.DeviceId</td>
-                            <td>@item.Name</td>
-                            <td>@((DeviceType)@item.DeviceType)</td>
-                            <td>@item.Ip</td>
-                            <td>@item.Mac</td>
-                            @{
-                                if (@item.Status == "connected")
-                                {
-                                    <td>
-                                        <label class="label label-success curve">روشن</label>
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td>
-                                        <label class="label label-danger curve">خاموش</label>
-                                    </td>
-                                }
-                            }
-                            <td>
+                            <th>شناسه </th>
+                            <th>نام</th>
+                            <th>نوع </th>
+                            <th>IP Address</th>
+                            <th>Mac Address</th>
+                            <th>وضعیت</th>
+                            <th>عملیات</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in Model.Devices)
+                        {
+                            <tr>
+                                <td style="font-weight: bold;">@item.DeviceId</td>
+                                <td>@item.Name</td>
+                                <td>@((DeviceType)@item.DeviceType)</td>
+                                <td>@item.Ip</td>
+                                <td>@item.Mac</td>
                                 @{
                                     if (@item.Status == "connected")
                                     {
-                                        <div class="portlet-body">
-                                            <a asp-page-handler="OpenDoor" asp-route-deviceId="@item.DeviceId" asp-route-deviceTypeId="@item.DeviceType" class="btn btn-primary curve" data-toggle="tooltip" data-placement="top" title="باز کردن درب"><i class="fa fa-unlock-alt"></i></a>
-                                            <a asp-page-handler="LockDoor" asp-route-deviceId="@item.DeviceId" asp-route-deviceTypeId="@item.DeviceType" class="btn btn-primary curve" data-toggle="tooltip" data-placement="top" title="قفل کردن درب"><i class="fa fa-lock"></i></a>
-                                            <a asp-page-handler="UnLockDoor" asp-route-deviceId="@item.DeviceId" asp-route-deviceTypeId="@item.DeviceType" class="btn btn-primary curve" data-toggle="tooltip" data-placement="top" title="باز ماندن درب"><i class="fa fa-unlock"></i></a>
-                                            <a asp-page-handler="NormalizeDoor" asp-route-deviceId="@item.DeviceId" asp-route-deviceTypeId="@item.DeviceType" class="btn btn-primary curve" data-toggle="tooltip" data-placement="top" title="عادی کردن وضعیت درب"><i class="fa fa-building"></i></a>
-                                            <a asp-page-handler="Delete" onclick="return confirm('آیا از حذف دستگاه اطمینان دارید ؟?');" asp-route-deviceId="@item.DeviceId" asp-route-deviceTypeId="@item.DeviceType" class="btn btn-danger curve" data-toggle="tooltip" data-placement="top" title="حذف کردن"><i class="fa fa-remove"></i></a>
-                                        </div>
+                                        <td>
+                                            <label class="label label-success curve">روشن</label>
+                                        </td>
                                     }
                                     else
                                     {
-                                        <label class="label label-warning curve">دستگاه خاموش می باشد</label>
-                                        <a asp-page-handler="Delete" onclick="return confirm('آیا از حذف دستگاه اطمینان دارید ؟?');" asp-route-deviceId="@item.DeviceId" asp-route-deviceTypeId="@item.DeviceType" class="btn btn-danger curve" data-toggle="tooltip" data-placement="top" title="حذف کردن"><i class="fa fa-remove"></i></a>
+                                        <td>
+                                            <label class="label label-danger curve">خاموش</label>
+                                        </td>
                                     }
                                 }
+                                <td>
+                                    @{
+                                        if (@item.Status == "connected")
+                                        {
+                                            <div class="portlet-body">
+                                                <a asp-page-handler="OpenDoor" asp-route-deviceId="@item.DeviceId" asp-route-deviceTypeId="@item.DeviceType" class="btn btn-primary curve" data-toggle="tooltip" data-placement="top" title="باز کردن درب"><i class="fa fa-unlock-alt"></i></a>
+                                                <a asp-page-handler="LockDoor" asp-route-deviceId="@item.DeviceId" asp-route-deviceTypeId="@item.DeviceType" class="btn btn-primary curve" data-toggle="tooltip" data-placement="top" title="قفل کردن درب"><i class="fa fa-lock"></i></a>
+                                                <a asp-page-handler="UnLockDoor" asp-route-deviceId="@item.DeviceId" asp-route-deviceTypeId="@item.DeviceType" class="btn btn-primary curve" data-toggle="tooltip" data-placement="top" title="باز ماندن درب"><i class="fa fa-unlock"></i></a>
+                                                <a asp-page-handler="NormalizeDoor" asp-route-deviceId="@item.DeviceId" asp-route-deviceTypeId="@item.DeviceType" class="btn btn-primary curve" data-toggle="tooltip" data-placement="top" title="عادی کردن وضعیت درب"><i class="fa fa-building"></i></a>
+                                                <a asp-page-handler="Delete" onclick="return confirm('آیا از حذف دستگاه اطمینان دارید ؟?');" asp-route-deviceId="@item.DeviceId" asp-route-deviceTypeId="@item.DeviceType" class="btn btn-danger curve" data-toggle="tooltip" data-placement="top" title="حذف کردن"><i class="fa fa-remove"></i></a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <label class="label label-warning curve">دستگاه خاموش می باشد</label>
+                                            <a asp-page-handler="Delete" onclick="return confirm('آیا از حذف دستگاه اطمینان دارید ؟?');" asp-route-deviceId="@item.DeviceId" asp-route-deviceTypeId="@item.DeviceType" class="btn btn-danger curve" data-toggle="tooltip" data-placement="top" title="حذف کردن"><i class="fa fa-remove"></i></a>
+                                        }
+                                    }
 
-                            </td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                    </div>
             </div><!-- /.portlet-body -->
         </div><!-- /.portlet -->
     </div>

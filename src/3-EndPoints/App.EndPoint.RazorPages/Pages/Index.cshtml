@@ -141,7 +141,6 @@
                     <table class="table table-bordered table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>شناسه</th>
                                 <th>نام کامل</th>
                                 <th>اثر انگشت</th>
                                 <th>چهره</th>
@@ -152,7 +151,6 @@
                             @foreach (var item in Model.users)
                             {
                                 <tr>
-                                    <td style="width: 20px">@item.Id</td>
                                     <td>@item.FullName</td>
                                     <td>
                                         @{
@@ -212,14 +210,12 @@
                     </div><!-- /.buttons-box -->
                 </div><!-- /.portlet-heading -->
                 <div class="portlet-body">
-                    <table class="table table-bordered table-striped table-hover">
+                    <table class="table table-responsive-sm table-bordered table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>شناسه</th>
                                 <th>نام کاربر</th>
                                 <th>نام درب</th>
                                 <th>تاریخ</th>
-                                <th>روز هفته</th>
                                 <th>ساعت</th>
 
                             </tr>
@@ -229,11 +225,9 @@
                             {@foreach (var item in Model.Events)
                                 {
                                     <tr>
-                                        <td>@item.IndexNo</td>
                                         <td>@item.Username</td>
                                         <td>@item.DeviceName</td>
                                         <td>@item.EventDateTime.ToPersianString()</td>
-                                        <td>@item.EventDateTime.ToPersianString("dddd")</td>
                                         <td>@item.EventDateTime.ToString("HH:mm:ss")</td>
                                     </tr>
                                 }}
