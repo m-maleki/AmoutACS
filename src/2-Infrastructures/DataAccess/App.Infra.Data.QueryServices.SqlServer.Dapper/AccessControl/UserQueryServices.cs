@@ -30,7 +30,7 @@ public class UserQueryServices : IUserQueryServices
     {
         DataTable table = new DataTable();
 
-        table.Columns.Add("Id", typeof(int));
+        table.Columns.Add("Id", typeof(string));
         table.Columns.Add("ReferenceCode", typeof(int));
         table.Columns.Add("Name", typeof(string));
         table.Columns.Add("ShortName", typeof(string));

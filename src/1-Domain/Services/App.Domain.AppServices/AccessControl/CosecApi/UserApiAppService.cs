@@ -41,16 +41,16 @@ public class UserApiAppService : IUserApiAppService
 
     #region Implementations
 
-    public async Task AssignUser(int userId, int deviceId, CancellationToken cancellationToken)
+    public async Task AssignUser(string userId, int deviceId, CancellationToken cancellationToken)
     {
-        var deviceType = await _deviceService.GetDeviceTypeWithDeviceId(deviceId, cancellationToken);
+        var deviceType = 6;
 
         var url = $"device?action=assign;device={addDeviceType(deviceType)}{deviceId};id={userId};";
 
         await _cosecApiService.CallApi(url, cancellationToken);
     }
 
-    public async Task RevokeUser(int userId, int deviceId, CancellationToken cancellationToken)
+    public async Task RevokeUser(string userId, int deviceId, CancellationToken cancellationToken)
     {
         var deviceType = await _deviceService.GetDeviceTypeWithDeviceId(deviceId, cancellationToken);
 
@@ -59,7 +59,7 @@ public class UserApiAppService : IUserApiAppService
         await _cosecApiService.CallApi(url, cancellationToken);
     }
 
-    public async Task ActiveUser(int userId, CancellationToken cancellationToken)
+    public async Task ActiveUser(string userId, CancellationToken cancellationToken)
     {
         var url = $"user?action=set;id={userId};active=1";
 
@@ -68,7 +68,7 @@ public class UserApiAppService : IUserApiAppService
         await _syncAppService.ReSyncUser(userId, cancellationToken);
     }
 
-    public async Task DeActiveUser(int userId, CancellationToken cancellationToken)
+    public async Task DeActiveUser(string userId, CancellationToken cancellationToken)
     {
         var url = $"user?action=set;id={userId};active=0";
 
@@ -92,7 +92,7 @@ public class UserApiAppService : IUserApiAppService
         }
     }
 
-    public async Task<UserChildDto> GetById(int userId, CancellationToken cancellationToken)
+    public async Task<UserChildDto> GetById(string userId, CancellationToken cancellationToken)
     {
         var url = $"user?action=get;id={userId};format=json";
 
@@ -106,7 +106,7 @@ public class UserApiAppService : IUserApiAppService
         return new UserChildDto();
     }
 
-    public async Task DeleteUser(int userId, CancellationToken cancellationToken)
+    public async Task DeleteUser(string userId, CancellationToken cancellationToken)
     {
         var url = $"user?action=delete;id={userId}";
 

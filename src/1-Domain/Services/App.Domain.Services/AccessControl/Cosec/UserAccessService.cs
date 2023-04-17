@@ -21,7 +21,7 @@ public class UserAccessService : IUserAccessService
 
     #region Implementations
 
-    public async Task<List<UserAccessDto>> GetAllByUserId(int userId, CancellationToken cancellationToken)
+    public async Task<List<UserAccessDto>> GetAllByUserId(string userId, CancellationToken cancellationToken)
         => await _userAccessRepository.GetAllByUserId(userId, cancellationToken);
 
     #endregion

@@ -27,20 +27,20 @@ namespace App.EndPoint.RazorPages.Pages.Access
             _userAppService = userAppService;
         }
 
-        public async Task OnGet(int id, bool showMessage)
+        public async Task OnGet(string id, bool showMessage)
         {
             UserDevices = await _deviceAppService.getDevicesWithUserAccess(id, default);
             User = await _userAppService.GetById(id, default);
             ShowMessage = showMessage;
         }
 
-        public async Task<IActionResult> OnPostAssign(int userId, int DeviceId)
+        public async Task<IActionResult> OnPostAssign(string userId, int DeviceId)
         {
             await _userApiAppService.AssignUser(userId, DeviceId, default);
             return RedirectToAction("OnGet", new { id = userId, showMessage = true });
         }
 
-        public async Task<IActionResult> OnPostRevoke(int userId, int DeviceId)
+        public async Task<IActionResult> OnPostRevoke(string userId, int DeviceId)
         {
             await _userApiAppService.RevokeUser(userId, DeviceId, default);
             return RedirectToAction("OnGet", new { id = userId, showMessage = true });

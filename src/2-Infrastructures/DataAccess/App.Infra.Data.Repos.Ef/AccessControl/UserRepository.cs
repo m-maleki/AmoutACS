@@ -62,7 +62,7 @@ public class UserRepository : IUserRepository
     public async Task<int> GetCount(CancellationToken cancellationToken)
         => await _appDbContext.Users.CountAsync(cancellationToken);
 
-    public async Task<UserOutputDto?> GetById(int id, CancellationToken cancellationToken)
+    public async Task<UserOutputDto?> GetById(string id, CancellationToken cancellationToken)
     {
         return await _appDbContext.Users
             .Select(x => new UserOutputDto
@@ -96,7 +96,7 @@ public class UserRepository : IUserRepository
     public async Task Update(UserChildDto model, CancellationToken cancellationToken)
     {
         var entity = await _appDbContext.Users
-            .FirstOrDefaultAsync(x => x.Id == int.Parse(model.id), cancellationToken: cancellationToken);
+            .FirstOrDefaultAsync(x => x.Id == model.id, cancellationToken: cancellationToken);
 
         if (entity != null)
         {
@@ -152,7 +152,7 @@ public class UserRepository : IUserRepository
             enrolled_fingers = Convert.ToInt32(model.enrolled_fingers),
             FullName = model.fullname,
             Grade = Convert.ToInt32(model.grade),
-            Id = Convert.ToInt32(model.id),
+            Id = model.id,
             Name = model.shortname,
             ShortName = model.name,
             LeaveGroup = Convert.ToInt32(model.section),
@@ -167,7 +167,7 @@ public class UserRepository : IUserRepository
         await _appDbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task Delete(int userId, CancellationToken cancellationToken)
+    public async Task Delete(string userId, CancellationToken cancellationToken)
     {
         var entity = await _appDbContext.Users.Where(x => x.Id == userId)
             .AsNoTracking()

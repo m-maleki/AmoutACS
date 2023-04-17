@@ -108,7 +108,7 @@ public class SyncAppService : ISyncAppService
         }
     }
 
-    public async Task ReSyncUser(int userId,CancellationToken cancellationToken)
+    public async Task ReSyncUser(string userId,CancellationToken cancellationToken)
     {
         var url = $"user?action=get;id={userId};format=json";
 
@@ -132,13 +132,20 @@ public class SyncAppService : ISyncAppService
         if (!response.Contains("No records found"))
         {
             var devices = JsonConvert.DeserializeObject<DeviceDto>(response).Devices;
+
+            foreach (var device in devices)
+            {
+                if (device.DeviceType == "16")
+                    device.DeviceType = "6";
+            }
+
             await _deviceService.DeleteAll(cancellationToken);
             Thread.Sleep(100);
             await _deviceQueryServices.BulkInsert(devices, cancellationToken);
         }
     }
 
-    public async Task<UserChildDto?> GetUser(int userId, CancellationToken cancellationToken)
+    public async Task<UserChildDto?> GetUser(string userId, CancellationToken cancellationToken)
     {
         var url = $"user?action=get;id={userId};format=json";
 

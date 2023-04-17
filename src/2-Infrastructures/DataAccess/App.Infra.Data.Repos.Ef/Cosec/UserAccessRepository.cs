@@ -30,7 +30,7 @@ public class UserAccessRepository : IUserAccessRepository
             .ToListAsync(cancellationToken);
 
 
-    public async Task<List<UserAccessDto>> GetAllByUserId(int userId, CancellationToken cancellationToken)
+    public async Task<List<UserAccessDto>> GetAllByUserId(string userId, CancellationToken cancellationToken)
         => await _cosecDbContext.UserAccess
             .Where(x=>x.UserId == userId.ToString())
             .Select(x => new UserAccessDto

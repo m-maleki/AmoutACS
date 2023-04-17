@@ -29,7 +29,7 @@ namespace App.EndPoint.RazorPages.Pages.Access
         }
 
 
-        public async Task OnGet(int userId)
+        public async Task OnGet(string userId)
         {
             User = await _userAppService.GetById(userId,default);
 
@@ -43,7 +43,7 @@ namespace App.EndPoint.RazorPages.Pages.Access
 
         }
 
-        public async Task<IActionResult> OnPostEnrollment(int deviceId, int userId, string EnrollmentType, int count)
+        public async Task<IActionResult> OnPostEnrollment(int deviceId, string userId, string EnrollmentType, int count)
         {
             var deviceTypeId = await _deviceAppService.GetDeviceTypeWithDeviceId(deviceId, default);
 
@@ -52,11 +52,12 @@ namespace App.EndPoint.RazorPages.Pages.Access
                 EnrollmentType = EnrollmentType,
                 DeviceId = deviceId,
                 UserId = userId,
-                DeviceTypeId = deviceTypeId,
+                DeviceTypeId = deviceTypeId == 6 ? 16 : deviceTypeId,
                 EnrollmentCount = count
             };
 
-          //  await _userApiAppService.EnrollmentUser(model, default);
+
+            await _userApiAppService.EnrollmentUser(model, default);
             return RedirectToAction("OnGet",new { userId = userId });
         }
     }

@@ -31,7 +31,7 @@ public class DeviceAppService : IDeviceAppService
     public async Task<int> GetActiveDevicesCount(CancellationToken cancellationToken)
         => await _deviceService.GetActiveDevicesCount(cancellationToken);
 
-    public async Task<List<DeviceOutputDto>> getDevicesWithUserAccess(int userId,CancellationToken cancellationToken)
+    public async Task<List<DeviceOutputDto>> getDevicesWithUserAccess(string userId,CancellationToken cancellationToken)
     {
         var devices = await _deviceService.GetAll(cancellationToken);
         var AccessUsers = await _userAccessService.GetAllByUserId(userId, cancellationToken);

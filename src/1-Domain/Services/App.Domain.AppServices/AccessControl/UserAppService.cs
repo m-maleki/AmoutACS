@@ -36,7 +36,7 @@ public class UserAppService : IUserAppService
     public async Task<int> GetCount(CancellationToken cancellationToken)
         => await _userService.GetCount(cancellationToken);
 
-    public async Task<UserOutputDto?> GetById(int id, CancellationToken cancellationToken)
+    public async Task<UserOutputDto?> GetById(string id, CancellationToken cancellationToken)
         => await _userService.GetById(id, cancellationToken);
     
     #endregion

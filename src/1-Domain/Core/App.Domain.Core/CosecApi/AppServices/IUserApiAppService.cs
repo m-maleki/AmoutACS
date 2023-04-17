@@ -6,12 +6,12 @@ using Framework.Core.Markers;
 namespace App.Domain.Core.CosecApi.AppServices;
 public interface IUserApiAppService : IScopedDependency
 {
-    Task AssignUser(int userId, int deviceId, CancellationToken cancellationToken);
-    Task RevokeUser(int userId, int deviceId, CancellationToken cancellationToken);
-    Task ActiveUser(int userId, CancellationToken cancellationToken);
-    Task DeActiveUser(int userId, CancellationToken cancellationToken);
+    Task AssignUser(string userId, int deviceId, CancellationToken cancellationToken);
+    Task RevokeUser(string userId, int deviceId, CancellationToken cancellationToken);
+    Task ActiveUser(string userId, CancellationToken cancellationToken);
+    Task DeActiveUser(string userId, CancellationToken cancellationToken);
     Task Create(CreateUserDto model, CancellationToken cancellationToken);
-    Task<UserChildDto> GetById(int userId, CancellationToken cancellationToken);
-    Task DeleteUser(int userId, CancellationToken cancellationToken);
+    Task<UserChildDto> GetById(string userId, CancellationToken cancellationToken);
+    Task DeleteUser(string userId, CancellationToken cancellationToken);
     Task EnrollmentUser(EnrollmentUserDto model, CancellationToken cancellationToken);
 }

@@ -9,7 +9,7 @@ public interface ISyncAppService: IScopedDependency
     void AddRecurringJobs(SiteSettings siteSettings);
     Task SyncEvents(CancellationToken cancellationToken);
     Task SyncUsers(CancellationToken cancellationToken);
-    Task ReSyncUser(int userId, CancellationToken cancellationToken);
+    Task ReSyncUser(string userId, CancellationToken cancellationToken);
     Task SyncDevices(CancellationToken cancellationToken);
-    Task<UserChildDto?> GetUser(int userId,CancellationToken cancellationToken);
+    Task<UserChildDto?> GetUser(string userId,CancellationToken cancellationToken);
 }

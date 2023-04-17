@@ -28,19 +28,19 @@ namespace App.EndPoint.RazorPages.Pages.Users
             users = await _userAppService.GetAll(default);
         }
 
-        public async Task<IActionResult> OnPostActive(int id)
+        public async Task<IActionResult> OnPostActive(string id)
         {
             await _userApiAppService.ActiveUser(id, default);
             return RedirectToAction("OnGet", new { showMessage = true});
         }
 
-        public async Task<IActionResult> OnPostDeActive(int id)
+        public async Task<IActionResult> OnPostDeActive(string id)
         {
             await _userApiAppService.DeActiveUser(id, default);
             return RedirectToAction("OnGet", new { showMessage = true });
 
         }
-        public async Task<IActionResult> OnPostCreate(int id, string name, string family)
+        public async Task<IActionResult> OnPostCreate(string id, string name, string family)
         {
             var model = new CreateUserDto
             {
@@ -53,7 +53,7 @@ namespace App.EndPoint.RazorPages.Pages.Users
             return RedirectToAction("OnGet", new { showMessage = true });
         }
 
-        public async Task<IActionResult> OnGetDelete(int id)
+        public async Task<IActionResult> OnGetDelete(string id)
         {
             await _userApiAppService.DeleteUser(id, default);
             return RedirectToAction("OnGet", new { showMessage = true });

@@ -10,7 +10,7 @@ namespace App.Infra.Data.Db.SqlServer.Ef.Entities.App
 {
     public class UserDbEntity
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public int ReferenceCode { get; set; }
         public string Name { get; set; }
         public string ShortName { get; set; }

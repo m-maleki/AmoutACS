@@ -7,6 +7,6 @@ public interface IUserAccessRepository : IScopedDependency
 {
     Task<List<UserAccessDto>> GetAll(CancellationToken cancellationToken);
 
-    Task<List<UserAccessDto>> GetAllByUserId(int userId,CancellationToken cancellationToken);
+    Task<List<UserAccessDto>> GetAllByUserId(string userId,CancellationToken cancellationToken);
 
 }

@@ -32,7 +32,7 @@ public class UserService : IUserService
     public async Task<int> GetCount(CancellationToken cancellationToken)
         => await _userRepository.GetCount(cancellationToken);
 
-    public async Task<UserOutputDto?> GetById(int id, CancellationToken cancellationToken)
+    public async Task<UserOutputDto?> GetById(string id, CancellationToken cancellationToken)
         => await _userRepository.GetById(id, cancellationToken);
 
     public async Task Update(UserChildDto model, CancellationToken cancellationToken)
@@ -41,7 +41,7 @@ public class UserService : IUserService
     public async Task Add(UserChildDto model, CancellationToken cancellationToken)
         => await _userRepository.Add(model, cancellationToken);
 
-    public async Task Delete(int userId, CancellationToken cancellationToken)
+    public async Task Delete(string userId, CancellationToken cancellationToken)
         => await _userRepository.Delete(userId, cancellationToken);
 
     #endregion
