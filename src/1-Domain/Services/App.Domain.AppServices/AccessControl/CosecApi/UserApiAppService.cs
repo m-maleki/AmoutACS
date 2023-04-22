@@ -43,7 +43,7 @@ public class UserApiAppService : IUserApiAppService
 
     public async Task AssignUser(string userId, int deviceId, CancellationToken cancellationToken)
     {
-        var deviceType = 6;
+        var deviceType = await _deviceService.GetDeviceTypeWithDeviceId(deviceId, cancellationToken);
 
         var url = $"device?action=assign;device={addDeviceType(deviceType)}{deviceId};id={userId};";
 
@@ -133,7 +133,7 @@ public class UserApiAppService : IUserApiAppService
         {
             case 0:
                 return "p_";
-            case 6:
+            case 6 or 16:
                 return "d_";
         }
 

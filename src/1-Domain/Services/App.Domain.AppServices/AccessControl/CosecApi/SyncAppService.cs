@@ -133,11 +133,11 @@ public class SyncAppService : ISyncAppService
         {
             var devices = JsonConvert.DeserializeObject<DeviceDto>(response).Devices;
 
-            foreach (var device in devices)
-            {
-                if (device.DeviceType == "16")
-                    device.DeviceType = "6";
-            }
+            //foreach (var device in devices)
+            //{
+            //    if (device.DeviceType == "16")
+            //        device.DeviceType = "6";
+            //}
 
             await _deviceService.DeleteAll(cancellationToken);
             Thread.Sleep(100);

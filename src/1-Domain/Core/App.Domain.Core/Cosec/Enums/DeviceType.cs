@@ -15,6 +15,7 @@ public enum DeviceType
     DoorV3 = 12,
     ARCIO800 = 14,
     DoorFMX = 15,
+    PathV2=16,
     ARCDC200 = 17,
     DoorV4 = 19,
     ARGO = 20,
