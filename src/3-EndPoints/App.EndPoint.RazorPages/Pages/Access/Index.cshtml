@@ -1,4 +1,5 @@
 ﻿@page
+@using App.Domain.Core.Cosec.Enums;
 @model App.EndPoint.RazorPages.Pages.Access.IndexModel
 @{
     ViewBag.Title = "مدیریت دسترسی ها";
@@ -83,7 +84,7 @@
                             <tr>
                                 <td>@item.DeviceId</td>
                                 <td>@item.Name</td>
-                                <td>@item.DeviceType</td>
+                                <td>@((DeviceType)@item.DeviceType)</td>
                                 <td>@item.Ip</td>
                                 <td>@item.Mac</td>
                                 @{

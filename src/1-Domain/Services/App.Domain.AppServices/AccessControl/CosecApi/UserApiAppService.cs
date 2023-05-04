@@ -133,7 +133,7 @@ public class UserApiAppService : IUserApiAppService
         {
             case 0:
                 return "p_";
-            case 6 or 16:
+            case 6 or 16 or 20:
                 return "d_";
         }
 

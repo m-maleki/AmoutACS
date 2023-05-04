@@ -48,6 +48,7 @@ namespace App.EndPoint.RazorPages.Pages.Account
         public async Task<IActionResult> OnPostLogin(string email, string password)
         {
            var result =  await _signInManager.PasswordSignInAsync(email, password, true, false);
+          
            if (result.Succeeded)
            {
                 await _syncAppService.SyncDevices(default);

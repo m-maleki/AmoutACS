@@ -52,7 +52,7 @@ namespace App.EndPoint.RazorPages.Pages.Access
                 EnrollmentType = EnrollmentType,
                 DeviceId = deviceId,
                 UserId = userId,
-                DeviceTypeId = deviceTypeId == 6 ? 16 : deviceTypeId,
+                DeviceTypeId = deviceTypeId,
                 EnrollmentCount = count
             };
 
